@@ -21,6 +21,7 @@ final class CartItemCell: UITableViewCell {
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
+    selectionStyle = .none // 셀 선택 강조 안보이도록
     setupUI()
     setupLayout()
   }

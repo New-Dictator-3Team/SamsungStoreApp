@@ -45,7 +45,6 @@ final class CartViewController: UIViewController {
     tableView.dataSource = self // 몇 개의 셀을 만들지, 어떻게 생겼는지
     tableView.delegate = self // UI 이벤트 처리
     tableView.register(CartItemCell.self, forCellReuseIdentifier: "CartItemCell") // CartItemCell을 쓸 것임
-    tableView.separatorStyle = .none // cell 누를때 효과 안나오도록
   }
 
   func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
