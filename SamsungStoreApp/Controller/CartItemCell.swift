@@ -10,55 +10,59 @@ import SnapKit
 import UIKit
 
 final class CartItemCell: UITableViewCell {
-  private let containerView = UIView()
   private let stackView = UIStackView()
+  private let countStackView = UIStackView()
   
   private let itemLabel = UILabel()
   private let minusButton = UIButton()
   private let countLabel = UILabel()
   private let plusButton = UIButton()
   private let priceLabel = UILabel()
-  
-  private var count: Int = 1
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    selectionStyle = .none // cell 누를때 효과 안나오도록
     setupUI()
     setupLayout()
   }
 
-  @available(*, unavailable)
+  @available(*, unavailable) // 넌 뭔데 계속 생기니?
   required init?(coder _: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: setup
+
   private func setupUI() {
-    contentView.addSubview(containerView)
-    containerView.backgroundColor = .white
-    containerView.clipsToBounds = true
-    
     configureStackView()
+    configureCountStackView()
     configureComponents()
   }
   
   // MARK: stackView
+
   private func configureStackView() {
-    containerView.addSubview(stackView)
+    contentView.addSubview(stackView)
     stackView.axis = .horizontal
     stackView.spacing = 12
     stackView.distribution = .fill
     stackView.alignment = .center
     
-    [itemLabel, minusButton, countLabel, plusButton, priceLabel].forEach {
-      stackView.addArrangedSubview($0)
+    for item in [itemLabel, countStackView, priceLabel] {
+      stackView.addArrangedSubview(item)
+    }
+  }
+  
+  private func configureCountStackView() {
+    countStackView.axis = .horizontal
+    for item in [plusButton, countLabel, minusButton] {
+      countStackView.addArrangedSubview(item)
     }
   }
   
   // MARK: components
+
   private func configureComponents() {
-    itemLabel.configure(text: "제품명")
+    itemLabel.configure(text: "갤럭시 S25")
     countLabel.configure(text: "1")
     priceLabel.configure(text: "10,000원")
 
@@ -67,30 +71,12 @@ final class CartItemCell: UITableViewCell {
     
     itemLabel.textAlignment = .left
     priceLabel.textAlignment = .right
-    
-//    minusButton.setContentHuggingPriority(.required, for: .horizontal)
-//    minusButton.setContentCompressionResistancePriority(.required, for: .horizontal)
-//    plusButton.setContentHuggingPriority(.required, for: .horizontal)
-//    plusButton.setContentCompressionResistancePriority(.required, for: .horizontal)
-//    
-//    countLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-//    countLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-//    
-//    itemLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-//    itemLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-//    
-//    priceLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-//    priceLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
   }
 
   private func setupLayout() {
-    containerView.snp.makeConstraints {
-      $0.top.bottom.equalToSuperview()
-      $0.leading.trailing.equalToSuperview().inset(24)
-    }
-    
     stackView.snp.makeConstraints {
-      $0.directionalEdges.equalToSuperview()
+      $0.top.bottom.equalToSuperview()
+      $0.leading.trailing.equalToSuperview().inset(12)
     }
     
     minusButton.snp.makeConstraints {
@@ -100,11 +86,19 @@ final class CartItemCell: UITableViewCell {
     plusButton.snp.makeConstraints {
       $0.width.height.equalTo(44)
     }
+    
+    itemLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+    priceLabel.setContentHuggingPriority(.required, for: .horizontal)
+    countLabel.textAlignment = .center
+    
+    countLabel.snp.makeConstraints {
+      $0.width.equalTo(32)
+    }
   }
-
 }
 
 // MARK: - UILabel & UIButton 설정 Extension
+
 private extension UILabel {
   func configure(text: String) {
     self.text = text

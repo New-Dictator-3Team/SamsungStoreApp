@@ -10,22 +10,34 @@ import SnapKit
 import UIKit
 
 final class CartViewController: UIViewController {
+  private let tableContainerView = UIView()
   private let tableView = UITableView()
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .white
     setupUI()
     setupTableView()
   }
 
   private func setupUI() {
-    view.addSubview(tableView)
+    view.backgroundColor = .white
+
+    tableContainerView.layer.cornerRadius = 12
+    tableContainerView.layer.borderColor = UIColor.black.cgColor
+    tableContainerView.layer.borderWidth = 1
+    tableContainerView.clipsToBounds = true
+
+    view.addSubview(tableContainerView)
+    tableContainerView.addSubview(tableView)
+
+    tableContainerView.snp.makeConstraints {
+      $0.top.equalTo(view.safeAreaLayoutGuide)
+      $0.leading.trailing.equalToSuperview().inset(12)
+      $0.height.equalTo(176)
+    }
 
     tableView.snp.makeConstraints {
-      $0.top.equalTo(view.safeAreaLayoutGuide)
-      $0.leading.trailing.equalToSuperview()
-      $0.height.equalTo(176)
+      $0.directionalEdges.equalToSuperview()
     }
   }
 
@@ -33,6 +45,7 @@ final class CartViewController: UIViewController {
     tableView.dataSource = self // 몇 개의 셀을 만들지, 어떻게 생겼는지
     tableView.delegate = self // UI 이벤트 처리
     tableView.register(CartItemCell.self, forCellReuseIdentifier: "CartItemCell") // CartItemCell을 쓸 것임
+    tableView.separatorStyle = .none // cell 누를때 효과 안나오도록
   }
 
   func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
