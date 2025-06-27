@@ -98,7 +98,7 @@ class MenuCollectionViewController: UIViewController {
       }
     }
 
-    dataService.jsonDebug()
+//    dataService.jsonDebug()
     
     
     
