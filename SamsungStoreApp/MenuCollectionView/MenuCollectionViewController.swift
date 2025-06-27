@@ -80,6 +80,7 @@ class MenuCollectionViewController: UIViewController {
     ProductManager.shared.loadProducts()
     guard let mobile = ProductManager.shared.categories?.mobile else { return }
     productPageView.configure(with: mobile)
+    productPageView.delegate = self
   }
 }
 
