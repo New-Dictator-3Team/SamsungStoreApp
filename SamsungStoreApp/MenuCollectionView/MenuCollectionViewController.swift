@@ -43,8 +43,10 @@ class MenuCollectionViewController: UIViewController {
     mainView.addSubview(shoppingCart)
     mainView.addSubview(bottomButton)
     
+    categoryTabView.delegate = self
+    
 //    categoryTabView.backgroundColor = AppColorType.primary
-    //    productPageView.backgroundColor = AppColorType.primary.withAlphaComponent(0.5)
+//    productPageView.backgroundColor = AppColorType.primary.withAlphaComponent(0.5)
     shoppingCart.backgroundColor = AppColorType.primary
     bottomButton.backgroundColor = AppColorType.primary
   }
@@ -103,10 +105,6 @@ class MenuCollectionViewController: UIViewController {
 }
 
 extension MenuCollectionViewController: ProductPageViewDelegate {
-  func productPageView(_ view: ProductPageView, didUpdateCategory category: String) {
-    print("카테고리 변경됨: \(category)")
-  }
-  
   func productPageView(_ view: ProductPageView, didSelect product: ProductItem) {
     print("선택된 제품:", product.name)
   }

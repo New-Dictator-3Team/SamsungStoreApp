@@ -68,8 +68,29 @@ final class ProductPageCell: UICollectionViewCell {
         cell.product = products[index]
       } else {
         cell.isHidden = true
+        cell.product = nil //
       }
     }
+    
+    for (rowIndex, rowStack) in verticalStack.arrangedSubviews.enumerated() {
+        guard let rowStack = rowStack as? UIStackView else { continue }
+
+        // 먼저 기존 spacer 뷰가 있다면 제거
+        rowStack.arrangedSubviews
+          .filter { !($0 is ProductGridCell) }
+          .forEach { $0.removeFromSuperview() }
+
+        // row별 유효 셀 개수 계산
+        let startIndex = rowIndex * 2
+        let endIndex = min(startIndex + 2, products.count)
+        let visibleCount = endIndex - startIndex
+
+        if visibleCount == 1 {
+          // 한 셀만 있을 경우, 나머지 공간 채우기용 UIView 추가
+          let spacer = UIView()
+          rowStack.addArrangedSubview(spacer)
+        }
+      }
   }
 
   @objc private func cellTapped(_ sender: UITapGestureRecognizer) {

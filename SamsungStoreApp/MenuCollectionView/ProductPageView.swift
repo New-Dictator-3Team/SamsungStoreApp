@@ -9,7 +9,6 @@ import SnapKit
 import UIKit
 
 protocol ProductPageViewDelegate: AnyObject {
-  func productPageView(_ view: ProductPageView, didUpdateCategory category: String)
   func productPageView(_ view: ProductPageView, didSelect product: ProductItem)
   
 }
@@ -83,6 +82,10 @@ final class ProductPageView: UIView {
     let pageCount = Int(ceil(Double(products.count) / 4.0))
     pageControl.numberOfPages = pageCount
     collectionView.reloadData()
+    
+    // 리로드 후 페이지컨트롤 첫번째로, 그리고 컬렉션뷰 위치도 초기화
+    pageControl.currentPage = 0
+    collectionView.setContentOffset(.zero, animated: false)
   }
 
   // MARK: - Actions
