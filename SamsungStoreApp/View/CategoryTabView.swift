@@ -1,3 +1,10 @@
+//
+//  CategoryTabView.swift
+//  SamsungStoreApp
+//
+//  Created by estelle on 6/27/25.
+//
+
 import SnapKit
 import UIKit
 
