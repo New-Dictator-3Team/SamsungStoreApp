@@ -8,16 +8,16 @@
 import SnapKit
 import UIKit
 
-/// merge 시에 곤란한 일이 발생하지 않기 위해 생성한 ViewController
-/// 다른 분들의 뷰를 더미로 생성하고, 그 사이에 제 뷰를 두는 것으로 설정했습니다.
 class MenuCollectionViewController: UIViewController {
   // MARK: - 프로퍼티
+  
   private var categories: [Category] = []
   private var selectedCategory: String = "모바일"
   private let dataService = DataService()
   
   private let mainView = UIView() // 더미 메인뷰
-  private let category = UIView() // 더미
+  
+  private let categoryTabView = CategoryTabView()
   private let productPageView = ProductPageView()
   private let shoppingCart = UIView() // 더미
   private let bottomButton = UIView() // 더미
@@ -38,12 +38,12 @@ class MenuCollectionViewController: UIViewController {
     view.backgroundColor = .systemBackground
     view.addSubview(mainView)
     
-    mainView.addSubview(category)
+    mainView.addSubview(categoryTabView)
     mainView.addSubview(productPageView)
     mainView.addSubview(shoppingCart)
     mainView.addSubview(bottomButton)
     
-    category.backgroundColor = AppColorType.primary
+//    categoryTabView.backgroundColor = AppColorType.primary
     //    productPageView.backgroundColor = AppColorType.primary.withAlphaComponent(0.5)
     shoppingCart.backgroundColor = AppColorType.primary
     bottomButton.backgroundColor = AppColorType.primary
@@ -54,7 +54,7 @@ class MenuCollectionViewController: UIViewController {
       $0.edges.equalTo(view.safeAreaLayoutGuide)
     }
     
-    category.snp.makeConstraints {
+    categoryTabView.snp.makeConstraints {
       $0.top.equalToSuperview()
       $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(76)
@@ -62,8 +62,8 @@ class MenuCollectionViewController: UIViewController {
     
     /// 제가 맡은 뷰의 제약입니다.
     productPageView.snp.makeConstraints {
-      $0.top.equalTo(category.snp.bottom)     // 상단은 카테고리 뷰의 하단에
-      $0.leading.trailing.equalToSuperview()  // 좌우는 슈퍼뷰와 동일하게
+      $0.top.equalTo(categoryTabView.snp.bottom) // 상단은 카테고리 뷰의 하단에
+      $0.leading.trailing.equalToSuperview() // 좌우는 슈퍼뷰와 동일하게
       $0.bottom.equalTo(shoppingCart.snp.top) // 하단은 쇼핑카트 뷰의 상단에
     }
     
@@ -80,7 +80,6 @@ class MenuCollectionViewController: UIViewController {
     }
   }
   
-  
   private func bindProducts() {
     dataService.loadCategories { [weak self] result in
       switch result {
@@ -88,9 +87,10 @@ class MenuCollectionViewController: UIViewController {
         self?.categories = loadedCategories
         DispatchQueue.main.async {
           guard let self = self else { return }
-          let items = self.categories.first(where: { $0.category == self.selectedCategory })?.items ?? []
+          self.categoryTabView.configure(categories: loadedCategories.map { $0.category })
+          let defaultItems = self.categories.first(where: { $0.category == self.selectedCategory })?.items ?? []
           print("✅ 불러온 카테고리 수: \(loadedCategories.count)")
-          self.productPageView.configure(with: items)
+          self.productPageView.configure(with: defaultItems)
           self.productPageView.delegate = self
         }
       case let .failure(error):
@@ -99,15 +99,6 @@ class MenuCollectionViewController: UIViewController {
     }
 
 //    dataService.jsonDebug()
-    
-    
-    
-    
-//    ProductManager.shared.loadProducts()
-//    guard let mobile = ProductManager.shared.categories?.mobile else { return }
-//    productPageView.configure(with: mobile)
-//    productPageView.delegate = self
-    
   }
 }
 
@@ -118,6 +109,14 @@ extension MenuCollectionViewController: ProductPageViewDelegate {
   
   func productPageView(_ view: ProductPageView, didSelect product: ProductItem) {
     print("선택된 제품:", product.name)
-    
+  }
+}
+
+extension MenuCollectionViewController: CategoryTabViewDelegate {
+  func didTapCategoryButton(selectedCategoryIndex: Int) {
+    self.selectedCategory = categories[selectedCategoryIndex].category
+    let items = categories[selectedCategoryIndex].items
+    productPageView.configure(with: items)
+    productPageView.delegate = self
   }
 }
