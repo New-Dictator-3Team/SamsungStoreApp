@@ -14,7 +14,7 @@ class DataService {
   }
 
   func loadCategories(completion: @escaping (Result<[Category], Error>) -> Void) {
-    guard let path = Bundle.main.path(forResource: "product", ofType: "json") else {
+    guard let path = Bundle.main.path(forResource: "Product", ofType: "json") else {
       completion(.failure(DataError.fileNotFound))
       return
     }
