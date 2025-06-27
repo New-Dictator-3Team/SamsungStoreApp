@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 // 카테고리 탭 선택 시 외부에 알리는 delegate
 protocol CategoryTabViewDelegate: AnyObject {
@@ -7,7 +7,6 @@ protocol CategoryTabViewDelegate: AnyObject {
 }
 
 class CategoryTabView: UIView {
-  
   weak var delegate: CategoryTabViewDelegate?
   
   // 수평 스크롤이 가능한 카테고리 영역
@@ -28,16 +27,19 @@ class CategoryTabView: UIView {
   }()
   
   // MARK: - Initializer
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupUI()
   }
   
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
   // MARK: - UI 세팅
+
   private func setupUI() {
     addSubview(categoryScrollView)
     categoryScrollView.addSubview(categoryStackView)
@@ -57,8 +59,8 @@ class CategoryTabView: UIView {
   }
   
   // MARK: - 카테고리 버튼 목록 구성
+
   func configure(categories: [String]) {
-    
     // 각 카테고리에 대해 버튼 생성 및 추가
     for (index, category) in categories.enumerated() {
       let categoryButton = createCategoryButton(title: category)
@@ -111,6 +113,7 @@ class CategoryTabView: UIView {
   }
   
   // MARK: - 버튼 클릭 처리
+
   @objc private func categoryButtonTapped(_ sender: UIButton) {
     let selectedCategoryIndex = sender.tag
     updateButtonState(index: selectedCategoryIndex)
@@ -124,6 +127,16 @@ class CategoryTabView: UIView {
       button.isSelected = (button.tag == index)
     }
     
-    
+    // 선택된 버튼을 스크롤뷰 가운데로 이동
+    if let selectedButton = buttons.first(where: { $0.tag == index }) {
+      let buttonFrameInScrollView = selectedButton.convert(selectedButton.bounds, to: categoryScrollView)
+      let scrollWidth = categoryScrollView.bounds.width
+      let targetX = buttonFrameInScrollView.midX - (scrollWidth / 2)
+      
+      let maxOffsetX = categoryScrollView.contentSize.width - scrollWidth
+      let offsetX = max(min(targetX, maxOffsetX), 0)
+      
+      categoryScrollView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
+    }
   }
 }
