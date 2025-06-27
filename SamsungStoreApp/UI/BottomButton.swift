@@ -1,8 +1,8 @@
 import UIKit
 
 enum ActionType {
-  case clear
-  case pay
+  case clear  // 전체 취소
+  case pay    // 결제하기
 
   var backgroundColor: UIColor {
     switch self {
@@ -24,7 +24,7 @@ enum ActionType {
 }
 
 final class BottomButton: UIButton {
-  init(title: String, type: ActionType, fontSize: CGFloat) {
+  init(title: String, type: ActionType, fontSize: CGFloat = 14) {
     super.init(frame: .zero)
     setup(title: title, type: type, fontSize: fontSize)
   }
@@ -43,4 +43,22 @@ final class BottomButton: UIButton {
     layer.borderWidth = 2
     layer.borderColor = AppColorType.secondary.cgColor
   }
+  
+  func setAction(_ target: Any?, action: Selector) {
+    self.addTarget(target, action: action, for: .touchUpInside)
+  }
 }
+// MARK: Usage
+
+//let clearButton = BottomButton(title: "취소", type: .clear, fontSize: 20)
+//let payButton = BottomButton(title: "결제", type: .pay, fontSize: 20)
+
+//let testStack = UIStackView(arrangedSubviews: [clearButton, payButton])
+//view.addSubview(testStack)
+//testStack.axis = .horizontal
+//testStack.spacing = 20
+//testStack.snp.makeConstraints {
+//  $0.center.equalToSuperview()
+//  $0.leading.trailing.equalToSuperview()
+//  $0.top.bottom.equalToSuperview().inset(20)
+//}
