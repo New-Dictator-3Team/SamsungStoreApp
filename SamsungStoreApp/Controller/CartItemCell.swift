@@ -18,6 +18,8 @@ final class CartItemCell: UITableViewCell {
   private let countLabel = UILabel()
   private let plusButton = UIButton()
   private let priceLabel = UILabel()
+  
+  private var count: Int = 1 // count
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -95,6 +97,23 @@ final class CartItemCell: UITableViewCell {
     countLabel.snp.makeConstraints {
       $0.width.equalTo(32)
     }
+    
+    minusButton.addTarget(self, action: #selector(minusButtonTapped), for: .touchUpInside)
+    plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+  }
+  
+  // 버튼 누를때 액션
+  @objc private func minusButtonTapped() {
+    guard count > 1 else { return } // 1개 까지만
+    count -= 1
+    countLabel.text = "\(count)"
+    // 0으로 떨어지면 셀 삭제되도록 해야함
+  }
+
+  @objc private func plusButtonTapped() {
+    guard count < 25 else { return } // count 최대 개수 25개
+    count += 1
+    countLabel.text = "\(count)"
   }
 }
 
