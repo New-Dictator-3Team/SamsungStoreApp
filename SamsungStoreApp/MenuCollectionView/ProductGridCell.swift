@@ -5,8 +5,8 @@
 //  Created by 김우성 on 6/27/25.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 class ProductGridCell: UIView {
   let imageView = UIImageView()
@@ -17,7 +17,7 @@ class ProductGridCell: UIView {
     didSet {
       imageView.image = UIImage(named: product?.image ?? "placeholder")
       nameLabel.text = product?.name ?? "-"
-      priceLabel.text = "\(product?.price.formatted(.number.grouping(.automatic)) ?? "0") 원"
+      priceLabel.text = "\(product?.price.formatted(.number.grouping(.automatic)) ?? "0")원"
     }
   }
   
@@ -26,6 +26,7 @@ class ProductGridCell: UIView {
     setupUI()
   }
   
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -39,11 +40,11 @@ class ProductGridCell: UIView {
     
     imageView.contentMode = .scaleAspectFit
     imageView.backgroundColor = .lightGray
+    imageView.layer.cornerRadius = 8
+    imageView.clipsToBounds = true
     
-//    nameLabel.font = .systemFont(ofSize: 14, weight: .medium)
     nameLabel.font = Font.title(size: 14)
     nameLabel.textAlignment = .center
-//    priceLabel.font = .systemFont(ofSize: 13)
     priceLabel.font = Font.text(size: 13)
     priceLabel.textColor = .secondaryLabel
     priceLabel.textAlignment = .center
@@ -61,7 +62,7 @@ class ProductGridCell: UIView {
     }
     
     imageView.snp.makeConstraints {
-      $0.height.equalToSuperview().multipliedBy(0.6)
+      $0.height.equalToSuperview().multipliedBy(0.75)
     }
   }
 }
