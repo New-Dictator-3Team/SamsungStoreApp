@@ -1,15 +1,15 @@
 import UIKit
 
 enum AppColorType {
-  static let primary = UIColor(hex: "#2189FF") // 파랑
-  static let secondary = UIColor(hex: "#000000") //검정
-  static let background = UIColor(hex: "#FFFFFF") //하양
-  static let highlight = UIColor(hex: "#2189FF") // 파랑
-  static let division = UIColor(hex: "#D9D9D9") // 회색
+    static let primary = UIColor(hex: "#2189FF") // 파랑
+    static let secondary = UIColor(hex: "#000000") // 검정
+    static let background = UIColor(hex: "#FFFFFF") // 하양
+    static let highlight = UIColor(hex: "#2189FF") // 파랑
+    static let division = UIColor(hex: "#D9D9D9") // 회색
 }
 
 extension UIColor {
-  //hex로 변환
+    // hex로 변환
     convenience init(hex: String) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
         hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
