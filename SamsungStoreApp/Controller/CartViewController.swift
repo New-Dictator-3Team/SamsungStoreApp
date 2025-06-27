@@ -24,13 +24,14 @@ final class CartViewController: UIViewController {
   private let tableContainerView = UIView()
   private let tableView = UITableView()
 
-  private var cartItems: [CartItem] = [ // 더미 데이터
-    CartItem(name: "갤럭시 S25", price: 1000000, count: 1),
-    CartItem(name: "갤럭시 버즈", price: 1200000, count: 1)
-  ]
-//  private var cartItems: [CartItem] = []
+//  private var cartItems: [CartItem] = [ // 더미 데이터
+//    CartItem(name: "갤럭시 S25", price: 1000000, count: 1),
+//    CartItem(name: "갤럭시 버즈", price: 1200000, count: 1)
+//  ]
+  private var cartItems: [CartItem] = []
 
   // MARK: viewDidLoad
+
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
@@ -81,7 +82,7 @@ final class CartViewController: UIViewController {
     }
   }
 
-  // 장바구니 제거 (정의만)
+  // 장바구니 제거
   func removeItem(_ index: Int) {
     cartItems.remove(at: index)
     // index 번째 셀을 지움
@@ -114,5 +115,19 @@ extension CartViewController: UITableViewDelegate, CartItemCellDelegate {
   func didTapDeleteButton(_ cell: CartItemCell) {
     guard let indexPath = tableView.indexPath(for: cell) else { return }
     removeItem(indexPath.row)
+  }
+}
+
+// MARK: ProductPageViewDelegate
+
+extension CartViewController: ProductPageViewDelegate {
+  func productPageView(_ view: ProductPageView, didSelect product: Product) {
+    // 선택된 상품(Product)을 CartItem으로 변환해서 장바구니 추가
+    let item = CartItem(name: product.name, price: product.price, count: 1)
+    addItem(item)
+  }
+
+  func productPageView(_ view: ProductPageView, didUpdateCategory category: String) {
+    // 사용 X. 프로토콜이라 정의만 함
   }
 }
