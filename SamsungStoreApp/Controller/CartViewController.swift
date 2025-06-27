@@ -9,20 +9,28 @@
 import SnapKit
 import UIKit
 
-final class CartViewController: UIViewController {
-  // MARK: Properties
+struct CartItem {
+  let name: String
+  var price: Int
+  var count: Int
 
+  // 총 금액
+  var totalPrice: Int {
+    return price * count
+  }
+}
+
+final class CartViewController: UIViewController {
   private let tableContainerView = UIView()
   private let tableView = UITableView()
 
-  private var cartItems: [CartItem] = [
+  private var cartItems: [CartItem] = [ // 더미 데이터
     CartItem(name: "갤럭시 S25", price: 1000000, count: 1),
     CartItem(name: "갤럭시 버즈", price: 1200000, count: 1)
   ]
 //  private var cartItems: [CartItem] = []
-  
-  // MARK: viewDidLoad
 
+  // MARK: viewDidLoad
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
@@ -60,9 +68,8 @@ final class CartViewController: UIViewController {
     tableView.delegate = self // UI 이벤트 처리
     tableView.register(CartItemCell.self, forCellReuseIdentifier: "CartItemCell") // TableView가 사용할 셀 클래스를 미리 등록(CartItemCell)
   }
-  
-  // TODO: 장바구니 제거 추가는 정의만함
-  // 장바구니 추가
+
+  // 장바구니 추가 (정의만)
   func addItem(_ item: CartItem) {
     // 조건 만족하는 첫 번째를 찾음
     if let index = cartItems.firstIndex(where: { $0.name == item.name }) {
@@ -73,8 +80,8 @@ final class CartViewController: UIViewController {
       tableView.reloadData()
     }
   }
-  
-  // 장바구니 제거
+
+  // 장바구니 제거 (정의만)
   func removeItem(_ index: Int) {
     cartItems.remove(at: index)
     // index 번째 셀을 지움
@@ -107,21 +114,5 @@ extension CartViewController: UITableViewDelegate, CartItemCellDelegate {
   func didTapDeleteButton(_ cell: CartItemCell) {
     guard let indexPath = tableView.indexPath(for: cell) else { return }
     removeItem(indexPath.row)
-  }
-}
-
-struct CartItem {
-  let name: String
-  var price: Int
-  var count: Int
-  
-  // 총 금액
-  var totalPrice: Int {
-    return price * count
-  }
-  
-  // 금액 텍스트
-  var priceText: String {
-    return "\(totalPrice) 원"
   }
 }
