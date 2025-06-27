@@ -1,3 +1,5 @@
+
+
 //
 //  CartItemCell.swift
 //  SamsungStoreApp
@@ -8,6 +10,10 @@
 
 import SnapKit
 import UIKit
+
+protocol CartItemCellDelegate: AnyObject {
+  func didTapDeleteButton(_ cell: CartItemCell)
+}
 
 final class CartItemCell: UITableViewCell {
   private let itemLabel = UILabel()
@@ -20,7 +26,11 @@ final class CartItemCell: UITableViewCell {
 
   private let countContainerView = UIView() // 스택 뷰에서 변경
 
-  private var count: Int = 1 // count
+  private var unitPrice: Int = 0 // 제품 1개의 가격
+  private var count: Int = 1 // 현재 셀의 수량 (기본값: 1)
+  
+  // cell.delegate = self 호출 안하면 nil이기 때문에 옵셔널
+  weak var delegate: CartItemCellDelegate?
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -41,6 +51,8 @@ final class CartItemCell: UITableViewCell {
     addSubviews()
   }
 
+  // MARK: subviews
+  
   private func addSubviews() {
     for item in [itemLabel, countContainerView, priceLabel, deleteButton] {
       contentView.addSubview(item)
@@ -70,19 +82,7 @@ final class CartItemCell: UITableViewCell {
       $0.centerY.equalToSuperview()
       $0.width.equalTo(200)
     }
-
-    deleteButton.snp.makeConstraints {
-      $0.trailing.equalToSuperview()
-      $0.centerY.equalToSuperview()
-      $0.width.height.equalTo(44)
-    }
-
-    priceLabel.snp.makeConstraints {
-      $0.centerY.equalToSuperview()
-      $0.trailing.equalTo(deleteButton.snp.leading)
-      $0.width.equalTo(100)
-    }
-
+    
     countContainerView.snp.makeConstraints {
       $0.centerY.equalToSuperview()
       $0.width.equalTo(112) // 44 + 24 + 44
@@ -100,52 +100,68 @@ final class CartItemCell: UITableViewCell {
       $0.leading.equalTo(plusButton.snp.trailing)
       $0.trailing.equalTo(minusButton.snp.leading)
     }
+    
+    deleteButton.snp.makeConstraints {
+      $0.trailing.equalToSuperview()
+      $0.centerY.equalToSuperview()
+      $0.width.height.equalTo(44)
+    }
+
+    priceLabel.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.trailing.equalTo(deleteButton.snp.leading)
+      $0.width.equalTo(100)
+    }
 
     minusButton.snp.makeConstraints {
       $0.trailing.top.bottom.equalToSuperview()
       $0.width.height.equalTo(44)
     }
 
-    setupPriorities()
     setupActions()
-  }
-
-  private func setupPriorities() {
-    // 우선순위
-    itemLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-    itemLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
-    countContainerView.setContentHuggingPriority(.required, for: .horizontal)
-    countContainerView.setContentCompressionResistancePriority(.required, for: .horizontal)
-
-    priceLabel.textAlignment = .right
-    priceLabel.setContentHuggingPriority(.required, for: .horizontal)
-    priceLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
   }
 
   private func setupActions() {
     minusButton.addTarget(self, action: #selector(minusButtonTapped), for: .touchUpInside)
     plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+    deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+  }
+  
+  // 1000000 -> "1,000,000" 형식 변경
+  private func formatPrice(_ price: Int) -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal // 천 단위마다 쉼표를 넣는 형식
+    return formatter.string(from: NSNumber(value: price)) ?? "\(price)"
   }
 
   // 버튼 누를때 액션
-  @objc private func minusButtonTapped() {
-    guard count > 1 else { return } // 1개 까지만
-    count -= 1
-    countLabel.text = "\(count)"
-  }
-
+  
   @objc private func plusButtonTapped() {
     guard count < 25 else { return } // count 최대 개수 25개
     count += 1
     countLabel.text = "\(count)"
+    priceLabel.text = "\(formatPrice(unitPrice * count)) 원"
+  }
+  
+  
+  @objc private func minusButtonTapped() {
+    guard count > 1 else { return } // 1개 까지만
+    count -= 1
+    countLabel.text = "\(count)"
+    priceLabel.text = "\(formatPrice(unitPrice * count)) 원"
+  }
+  
+  @objc private func deleteButtonTapped() {
+    delegate?.didTapDeleteButton(self) // CartItemCell에서 삭제 버튼이 눌림을 VC에 알리기 위해
   }
 
   // 전달받은 값으로 셀 구성
-  func configure(itemName: String, price: String) {
-    itemLabel.text = itemName
-    priceLabel.text = "\(price)원"
-    countLabel.text = "1"
+  func configure(item: CartItem) {
+    itemLabel.text = item.name
+    countLabel.text = "\(item.count)"
+    priceLabel.text = item.priceText
+    unitPrice = item.price
+    count = item.count
   }
 }
 
