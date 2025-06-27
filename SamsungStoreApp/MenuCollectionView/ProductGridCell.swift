@@ -13,11 +13,11 @@ class ProductGridCell: UIView {
   let nameLabel = UILabel()
   let priceLabel = UILabel()
   
-  var product: Product? {
+  var product: ProductItem? {
     didSet {
       imageView.image = UIImage(named: product?.image ?? "placeholder")
       nameLabel.text = product?.name ?? "-"
-      priceLabel.text = "\(product?.price.formatted(.number.grouping(.automatic)) ?? "0")원"
+      priceLabel.text = (product?.price ?? "0") + "원"
     }
   }
   
@@ -39,7 +39,7 @@ class ProductGridCell: UIView {
     clipsToBounds = true
     
     imageView.contentMode = .scaleAspectFit
-    imageView.backgroundColor = .lightGray
+//    imageView.backgroundColor = .lightGray
     imageView.layer.cornerRadius = 8
     imageView.clipsToBounds = true
     

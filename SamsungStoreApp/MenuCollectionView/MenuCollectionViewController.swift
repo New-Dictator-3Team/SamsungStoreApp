@@ -12,6 +12,9 @@ import UIKit
 /// 다른 분들의 뷰를 더미로 생성하고, 그 사이에 제 뷰를 두는 것으로 설정했습니다.
 class MenuCollectionViewController: UIViewController {
   // MARK: - 프로퍼티
+  private var categories: [Category] = []
+  private var selectedCategory: String = "모바일"
+  private let dataService = DataService()
   
   private let mainView = UIView() // 더미 메인뷰
   private let category = UIView() // 더미
@@ -41,7 +44,7 @@ class MenuCollectionViewController: UIViewController {
     mainView.addSubview(bottomButton)
     
     category.backgroundColor = AppColorType.primary
-//    productPageView.backgroundColor = AppColorType.primary.withAlphaComponent(0.5)
+    //    productPageView.backgroundColor = AppColorType.primary.withAlphaComponent(0.5)
     shoppingCart.backgroundColor = AppColorType.primary
     bottomButton.backgroundColor = AppColorType.primary
   }
@@ -79,10 +82,32 @@ class MenuCollectionViewController: UIViewController {
   
   
   private func bindProducts() {
-    ProductManager.shared.loadProducts()
-    guard let mobile = ProductManager.shared.categories?.mobile else { return }
-    productPageView.configure(with: mobile)
-    productPageView.delegate = self
+    dataService.loadCategories { [weak self] result in
+      switch result {
+      case let .success(loadedCategories):
+        self?.categories = loadedCategories
+        DispatchQueue.main.async {
+          guard let self = self else { return }
+          let items = self.categories.first(where: { $0.category == self.selectedCategory })?.items ?? []
+          print("✅ 불러온 카테고리 수: \(loadedCategories.count)")
+          self.productPageView.configure(with: items)
+          self.productPageView.delegate = self
+        }
+      case let .failure(error):
+        print("🚨 데이터 로딩 실패: \(error)")
+      }
+    }
+
+    dataService.jsonDebug()
+    
+    
+    
+    
+//    ProductManager.shared.loadProducts()
+//    guard let mobile = ProductManager.shared.categories?.mobile else { return }
+//    productPageView.configure(with: mobile)
+//    productPageView.delegate = self
+    
   }
 }
 
@@ -91,7 +116,7 @@ extension MenuCollectionViewController: ProductPageViewDelegate {
     print("카테고리 변경됨: \(category)")
   }
   
-  func productPageView(_ view: ProductPageView, didSelect product: Product) {
+  func productPageView(_ view: ProductPageView, didSelect product: ProductItem) {
     print("선택된 제품:", product.name)
     
   }

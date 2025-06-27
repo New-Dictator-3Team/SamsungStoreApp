@@ -13,7 +13,7 @@ final class ProductPageCell: UICollectionViewCell {
 
   private let verticalStack = UIStackView() // 수직 스택
   private var cells: [ProductGridCell] = []
-  var tapHandler: ((Product) -> Void)?
+  var tapHandler: ((ProductItem) -> Void)?
 
   // MARK: -
 
@@ -61,7 +61,7 @@ final class ProductPageCell: UICollectionViewCell {
 
   // MARK: -
   
-  func configure(with products: [Product]) {
+  func configure(with products: [ProductItem]) {
     for (index, cell) in cells.enumerated() {
       if index < products.count {
         cell.isHidden = false

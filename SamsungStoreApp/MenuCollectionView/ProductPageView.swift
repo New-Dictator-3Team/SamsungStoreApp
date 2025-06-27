@@ -10,7 +10,7 @@ import UIKit
 
 protocol ProductPageViewDelegate: AnyObject {
   func productPageView(_ view: ProductPageView, didUpdateCategory category: String)
-  func productPageView(_ view: ProductPageView, didSelect product: Product)
+  func productPageView(_ view: ProductPageView, didSelect product: ProductItem)
   
 }
 
@@ -22,7 +22,7 @@ final class ProductPageView: UIView {
 
   // MARK: - Data
 
-  private var products: [Product] = []
+  private var products: [ProductItem] = []
   weak var delegate: ProductPageViewDelegate?
 
   // MARK: - Init
@@ -77,8 +77,8 @@ final class ProductPageView: UIView {
 
   // MARK: - Public API
 
-  /// 외부에서 전달된 [Product]를 저장하고, collectionView와 pageControl을 업데이트합니다.
-  func configure(with products: [Product]) {
+  /// 외부에서 전달된 [ProductItem]를 저장하고, collectionView와 pageControl을 업데이트합니다.
+  func configure(with products: [ProductItem]) {
     self.products = products
     let pageCount = Int(ceil(Double(products.count) / 4.0))
     pageControl.numberOfPages = pageCount
