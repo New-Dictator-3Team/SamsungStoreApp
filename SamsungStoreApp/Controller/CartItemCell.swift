@@ -10,15 +10,16 @@ import SnapKit
 import UIKit
 
 final class CartItemCell: UITableViewCell {
-  private let stackView = UIStackView()
-  private let countStackView = UIStackView()
-  
   private let itemLabel = UILabel()
-  private let minusButton = UIButton()
   private let countLabel = UILabel()
-  private let plusButton = UIButton()
   private let priceLabel = UILabel()
-  
+
+  private let minusButton = UIButton()
+  private let plusButton = UIButton()
+  private let deleteButton = UIButton()
+
+  private let countContainerView = UIView() // 스택 뷰에서 변경
+
   private var count: Int = 1 // count
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -36,78 +37,102 @@ final class CartItemCell: UITableViewCell {
   // MARK: setup
 
   private func setupUI() {
-    configureStackView()
-    configureCountStackView()
     configureComponents()
+    addSubviews()
   }
-  
-  // MARK: stackView
 
-  private func configureStackView() {
-    contentView.addSubview(stackView)
-    stackView.axis = .horizontal
-    stackView.spacing = 12
-    stackView.distribution = .fill
-    stackView.alignment = .center
-    
-    for item in [itemLabel, countStackView, priceLabel] {
-      stackView.addArrangedSubview(item)
+  private func addSubviews() {
+    for item in [itemLabel, countContainerView, priceLabel, deleteButton] {
+      contentView.addSubview(item)
     }
-  }
-  
-  private func configureCountStackView() {
-    countStackView.axis = .horizontal
+
     for item in [plusButton, countLabel, minusButton] {
-      countStackView.addArrangedSubview(item)
+      countContainerView.addSubview(item)
     }
   }
-  
+
   // MARK: components
 
   private func configureComponents() {
-    itemLabel.configure(text: "갤럭시 S25")
-    countLabel.configure(text: "1")
-    priceLabel.configure(text: "10,000원")
-
     minusButton.configure(title: "−")
     plusButton.configure(title: "+")
-    
+    deleteButton.configure(title: "X")
+    deleteButton.setTitleColor(.red, for: .normal)
+
     itemLabel.textAlignment = .left
     priceLabel.textAlignment = .right
+    countLabel.textAlignment = .center
   }
 
   private func setupLayout() {
-    stackView.snp.makeConstraints {
-      $0.top.bottom.equalToSuperview()
-      $0.leading.trailing.equalToSuperview().inset(12)
+    itemLabel.snp.makeConstraints {
+      $0.leading.equalToSuperview().inset(12)
+      $0.centerY.equalToSuperview()
+      $0.width.equalTo(200)
     }
-    
-    minusButton.snp.makeConstraints {
+
+    deleteButton.snp.makeConstraints {
+      $0.trailing.equalToSuperview()
+      $0.centerY.equalToSuperview()
       $0.width.height.equalTo(44)
     }
-    
+
+    priceLabel.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.trailing.equalTo(deleteButton.snp.leading)
+      $0.width.equalTo(100)
+    }
+
+    countContainerView.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.width.equalTo(112) // 44 + 24 + 44
+      $0.leading.equalTo(itemLabel.snp.trailing)
+      $0.trailing.equalTo(priceLabel.snp.leading)
+    }
+
     plusButton.snp.makeConstraints {
+      $0.leading.top.bottom.equalToSuperview()
       $0.width.height.equalTo(44)
     }
-    
-    itemLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-    priceLabel.setContentHuggingPriority(.required, for: .horizontal)
-    countLabel.textAlignment = .center
-    
-    countLabel.snp.makeConstraints {
-      $0.width.equalTo(32)
+
+    countLabel.snp.remakeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalTo(plusButton.snp.trailing)
+      $0.trailing.equalTo(minusButton.snp.leading)
     }
-    
+
+    minusButton.snp.makeConstraints {
+      $0.trailing.top.bottom.equalToSuperview()
+      $0.width.height.equalTo(44)
+    }
+
+    setupPriorities()
+    setupActions()
+  }
+
+  private func setupPriorities() {
+    // 우선순위
+    itemLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+    itemLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+
+    countContainerView.setContentHuggingPriority(.required, for: .horizontal)
+    countContainerView.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+    priceLabel.textAlignment = .right
+    priceLabel.setContentHuggingPriority(.required, for: .horizontal)
+    priceLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+  }
+
+  private func setupActions() {
     minusButton.addTarget(self, action: #selector(minusButtonTapped), for: .touchUpInside)
     plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
   }
-  
+
   // 버튼 누를때 액션
   @objc private func minusButtonTapped() {
     guard count > 1 else { return } // 1개 까지만
     count -= 1
     countLabel.text = "\(count)"
-    // 0으로 떨어지면 셀 삭제되도록 해야함
   }
 
   @objc private func plusButtonTapped() {
@@ -115,15 +140,16 @@ final class CartItemCell: UITableViewCell {
     count += 1
     countLabel.text = "\(count)"
   }
-}
 
-// MARK: - UILabel & UIButton 설정 Extension
-
-private extension UILabel {
-  func configure(text: String) {
-    self.text = text
+  // 전달받은 값으로 셀 구성
+  func configure(itemName: String, price: String) {
+    itemLabel.text = itemName
+    priceLabel.text = "\(price)원"
+    countLabel.text = "1"
   }
 }
+
+// MARK: - UIButton 설정 Extension
 
 private extension UIButton {
   func configure(title: String) {

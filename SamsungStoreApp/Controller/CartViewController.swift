@@ -10,14 +10,29 @@ import SnapKit
 import UIKit
 
 final class CartViewController: UIViewController {
+  // MARK: Properties
+
   private let tableContainerView = UIView()
   private let tableView = UITableView()
+
+  private let cartItems: [CartItem] = [ // 더미 데이터
+    CartItem(name: "갤럭시 S25", price: "1,000,000"),
+    CartItem(name: "갤럭시 버즈", price: "1,200,000"),
+    CartItem(name: "갤럭시 버즈 2", price: "2,000,000"),
+    CartItem(name: "갤럭시 워치", price: "600,000"),
+    CartItem(name: "갤럭시 플립", price: "3,000,000"),
+    CartItem(name: "갤럭시 폴드", price: "1,500,000"),
+  ]
+
+  // MARK: viewDidLoad
 
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
-    setupTableView()
+    configureTableView()
   }
+
+  // MARK: setup
 
   private func setupUI() {
     view.backgroundColor = .white
@@ -41,14 +56,20 @@ final class CartViewController: UIViewController {
     }
   }
 
-  private func setupTableView() {
+  // MARK: TableView Configuration
+
+  private func configureTableView() {
     tableView.dataSource = self // 몇 개의 셀을 만들지, 어떻게 생겼는지
     tableView.delegate = self // UI 이벤트 처리
     tableView.register(CartItemCell.self, forCellReuseIdentifier: "CartItemCell") // CartItemCell을 쓸 것임
   }
+}
 
+// MARK: Data Sourece
+
+extension CartViewController: UITableViewDataSource {
   func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-    return 4
+    return cartItems.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -56,9 +77,18 @@ final class CartViewController: UIViewController {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "CartItemCell", for: indexPath) as? CartItemCell else {
       return UITableViewCell()
     }
+
+    let item = cartItems[indexPath.row]
+    cell.configure(itemName: item.name, price: item.price)
     return cell
   }
 }
 
-extension CartViewController: UITableViewDataSource {}
+// MARK: Delegate
+
 extension CartViewController: UITableViewDelegate {}
+
+struct CartItem {
+  let name: String
+  let price: String
+}
