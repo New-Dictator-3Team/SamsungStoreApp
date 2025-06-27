@@ -23,14 +23,14 @@ class ProductGridCell: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    setup()
+    setupUI()
   }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
-  private func setup() {
+  private func setupUI() {
     backgroundColor = .white
     layer.cornerRadius = 8
     layer.borderWidth = 0.5
@@ -40,9 +40,11 @@ class ProductGridCell: UIView {
     imageView.contentMode = .scaleAspectFit
     imageView.backgroundColor = .lightGray
     
-    nameLabel.font = .systemFont(ofSize: 14, weight: .medium)
+//    nameLabel.font = .systemFont(ofSize: 14, weight: .medium)
+    nameLabel.font = Font.title(size: 14)
     nameLabel.textAlignment = .center
-    priceLabel.font = .systemFont(ofSize: 13)
+//    priceLabel.font = .systemFont(ofSize: 13)
+    priceLabel.font = Font.text(size: 13)
     priceLabel.textColor = .secondaryLabel
     priceLabel.textAlignment = .center
     

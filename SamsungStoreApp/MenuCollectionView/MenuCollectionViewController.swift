@@ -40,10 +40,10 @@ class MenuCollectionViewController: UIViewController {
     mainView.addSubview(shoppingCart)
     mainView.addSubview(bottomButton)
     
-    category.backgroundColor = .red.withAlphaComponent(0.3)
-    productPageView.backgroundColor = .blue.withAlphaComponent(0.3)
-    shoppingCart.backgroundColor = .yellow.withAlphaComponent(0.3)
-    bottomButton.backgroundColor = .green.withAlphaComponent(0.3)
+//    category.backgroundColor = .red.withAlphaComponent(0.3)
+//    productPageView.backgroundColor = .blue.withAlphaComponent(0.3)
+//    shoppingCart.backgroundColor = .yellow.withAlphaComponent(0.3)
+//    bottomButton.backgroundColor = .green.withAlphaComponent(0.3)
   }
   
   private func setupConstraints() {
