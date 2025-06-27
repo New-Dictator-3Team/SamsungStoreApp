@@ -20,7 +20,7 @@ class MenuCollectionViewController: UIViewController {
   private let categoryTabView = CategoryTabView()
   private let productPageView = ProductPageView()
   private let shoppingCart = UIView() // 더미
-  private let bottomButton = UIView() // 더미
+  private let bottomView = BottomView()
   
   // MARK: - 라이프사이클
   
@@ -41,14 +41,14 @@ class MenuCollectionViewController: UIViewController {
     mainView.addSubview(categoryTabView)
     mainView.addSubview(productPageView)
     mainView.addSubview(shoppingCart)
-    mainView.addSubview(bottomButton)
+    mainView.addSubview(bottomView)
     
     categoryTabView.delegate = self
     
 //    categoryTabView.backgroundColor = AppColorType.primary
 //    productPageView.backgroundColor = AppColorType.primary.withAlphaComponent(0.5)
     shoppingCart.backgroundColor = AppColorType.primary
-    bottomButton.backgroundColor = AppColorType.primary
+//    bottomView.backgroundColor = AppColorType.primary
   }
   
   private func setupConstraints() {
@@ -70,12 +70,12 @@ class MenuCollectionViewController: UIViewController {
     }
     
     shoppingCart.snp.makeConstraints {
-      $0.bottom.equalTo(bottomButton.snp.top)
+      $0.bottom.equalTo(bottomView.snp.top)
       $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(258)
     }
     
-    bottomButton.snp.makeConstraints {
+    bottomView.snp.makeConstraints {
       $0.bottom.equalToSuperview()
       $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(52)
