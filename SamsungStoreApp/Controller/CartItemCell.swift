@@ -24,7 +24,7 @@ final class CartItemCell: UITableViewCell {
   private let plusButton = UIButton()
   private let deleteButton = UIButton()
 
-  private let countContainerView = UIView() // 스택 뷰에서 변경
+  private let countContainerView = UIView()
 
   private var item: CartItem? // 내부 변경 x
 
@@ -32,6 +32,7 @@ final class CartItemCell: UITableViewCell {
   weak var delegate: CartItemCellDelegate?
 
   // MARK: init
+
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     selectionStyle = .none // 셀 선택 강조 안보이도록
@@ -46,23 +47,26 @@ final class CartItemCell: UITableViewCell {
   }
 
   // MARK: - setupUI
+
   private func setupUI() {
     addSubviews()
     setupUIComponents()
   }
-  
+
   // MARK: - addSubviews
+
   private func addSubviews() {
     for item in [itemLabel, countContainerView, priceLabel, deleteButton] {
       contentView.addSubview(item)
     }
 
-    for item in [plusButton, countLabel, minusButton] {
+    for item in [minusButton, countLabel, plusButton] {
       countContainerView.addSubview(item)
     }
   }
-  
+
   // MARK: setupUIComponents
+
   private func setupUIComponents() {
     minusButton.configure(title: "−")
     plusButton.configure(title: "+")
@@ -75,6 +79,7 @@ final class CartItemCell: UITableViewCell {
   }
 
   // MARK: setupLayout
+
   private func setupLayout() {
     setupItemLabelLayout()
     setupCountContainerViewLayout()
@@ -84,7 +89,7 @@ final class CartItemCell: UITableViewCell {
     setupPriceLabelLayout()
     setupMinusButtonLayout()
   }
-  
+
   // itemLabel 제약조건
   private func setupItemLabelLayout() {
     itemLabel.snp.makeConstraints {
@@ -93,7 +98,7 @@ final class CartItemCell: UITableViewCell {
       $0.width.equalTo(190)
     }
   }
-  
+
   // countContainerView 제약조건
   private func setupCountContainerViewLayout() {
     countContainerView.snp.makeConstraints {
@@ -104,9 +109,9 @@ final class CartItemCell: UITableViewCell {
     }
   }
 
-  // plusButton 제약조건
-  private func setupPlusButtonLayout() {
-    plusButton.snp.makeConstraints {
+  // minusButton 제약조건
+  private func setupMinusButtonLayout() {
+    minusButton.snp.makeConstraints {
       $0.leading.top.bottom.equalToSuperview()
       $0.width.height.equalTo(44)
     }
@@ -116,16 +121,15 @@ final class CartItemCell: UITableViewCell {
   private func setupCountLabelLayout() {
     countLabel.snp.remakeConstraints {
       $0.centerY.equalToSuperview()
-      $0.leading.equalTo(plusButton.snp.trailing)
-      $0.trailing.equalTo(minusButton.snp.leading)
+      $0.leading.equalTo(minusButton.snp.trailing)
+      $0.trailing.equalTo(plusButton.snp.leading)
     }
   }
 
-  // deleteButton 제약조건
-  private func setupDeleteButtonLayout() {
-    deleteButton.snp.makeConstraints {
-      $0.trailing.equalToSuperview()
-      $0.centerY.equalToSuperview()
+  // plusButton 제약조건
+  private func setupPlusButtonLayout() {
+    plusButton.snp.makeConstraints {
+      $0.trailing.top.bottom.equalToSuperview()
       $0.width.height.equalTo(44)
     }
   }
@@ -139,15 +143,17 @@ final class CartItemCell: UITableViewCell {
     }
   }
 
-  // minusButton 제약조건
-  private func setupMinusButtonLayout() {
-    minusButton.snp.makeConstraints {
-      $0.trailing.top.bottom.equalToSuperview()
+  // deleteButton 제약조건
+  private func setupDeleteButtonLayout() {
+    deleteButton.snp.makeConstraints {
+      $0.trailing.equalToSuperview()
+      $0.centerY.equalToSuperview()
       $0.width.height.equalTo(44)
     }
   }
 
   // MARK: Actions
+
   private func setupActions() {
     minusButton.addTarget(self, action: #selector(minusButtonTapped), for: .touchUpInside)
     plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
@@ -174,7 +180,7 @@ final class CartItemCell: UITableViewCell {
   @objc private func deleteButtonTapped() {
     delegate?.didTapDeleteButton(self) // CartItemCell에서 삭제 버튼이 눌림을 VC에 알리기 위해
   }
-  
+
   // 1000000의 정수 값을 -> "1,000,000"형식의 문자열 변경
   private func formatPrice(_ price: Int) -> String {
     let formatter = NumberFormatter()
@@ -184,6 +190,7 @@ final class CartItemCell: UITableViewCell {
   }
 
   // MARK: - configure
+
   // 전달받은 CartItem으로 셀 UI구성
   func configure(item: CartItem) {
     self.item = item
@@ -194,6 +201,7 @@ final class CartItemCell: UITableViewCell {
 }
 
 // MARK: - UIButton Method
+
 private extension UIButton {
   func configure(title: String) {
     self.setTitle(title, for: .normal)

@@ -22,6 +22,7 @@ final class CartViewController: UIViewController {
   private var cartItems: [CartItem] = []
 
   // MARK: viewDidLoad
+
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
@@ -30,18 +31,21 @@ final class CartViewController: UIViewController {
   }
 
   // MARK: setupUI
+
   private func setupUI() {
     addSubviews()
     setupUIComponents()
   }
-  
+
   // MARK: addSubviews
+
   private func addSubviews() {
     view.addSubview(tableContainerView)
     tableContainerView.addSubview(tableView)
   }
-  
+
   // MARK: setupUIComponents
+
   private func setupUIComponents() {
     view.backgroundColor = .white
 
@@ -50,13 +54,14 @@ final class CartViewController: UIViewController {
     tableContainerView.layer.borderWidth = 1
     tableContainerView.clipsToBounds = true
   }
-  
+
   // MARK: setupLayout
+
   private func setupLayout() {
     setupTableContainerViewLayout()
     setupTableViewLayout()
   }
-  
+
   // tableContainerView 제약조건
   private func setupTableContainerViewLayout() {
     tableContainerView.snp.makeConstraints {
@@ -65,7 +70,7 @@ final class CartViewController: UIViewController {
       $0.height.equalTo(176)
     }
   }
-  
+
   // tableView 제약조건
   private func setupTableViewLayout() {
     tableView.snp.makeConstraints {
@@ -74,6 +79,7 @@ final class CartViewController: UIViewController {
   }
 
   // MARK: - configureTableView
+
   // dataSource + delegate 설정 및 셀
   private func configureTableView() {
     tableView.dataSource = self // 몇 개의 셀을 만들지, 어떻게 생겼는지
@@ -102,6 +108,7 @@ final class CartViewController: UIViewController {
 }
 
 // MARK: - UITableViewDataSource
+
 extension CartViewController: UITableViewDataSource {
   // 장바구니의 개수
   func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
@@ -122,6 +129,7 @@ extension CartViewController: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate, CartItemCellDelegate
+
 // Delegate(셀 내부 발생 이벤트)
 extension CartViewController: UITableViewDelegate, CartItemCellDelegate {
   // 셀에서 삭제 버튼이 눌렸을 때 아이템 제거
@@ -139,6 +147,7 @@ extension CartViewController: UITableViewDelegate, CartItemCellDelegate {
 }
 
 // MARK: - ProductPageViewDelegate
+
 // Delegate(상품 목록 페이지에서 발생 이벤트)
 extension CartViewController: ProductPageViewDelegate {
   // 선택된 상품(Product)을 CartItem으로 변환해서 장바구니 추가
