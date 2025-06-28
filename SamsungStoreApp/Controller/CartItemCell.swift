@@ -4,13 +4,15 @@
 //
 //  Created by 서광용 on 6/26/25.
 
-// MARK: Custom Cell View
+// MARK: CartItemCell
 
 import SnapKit
 import UIKit
 
+// 셀 내부 이벤트를 CartViewController로 전달하기 위한 Delegate
 protocol CartItemCellDelegate: AnyObject {
   func didTapDeleteButton(_ cell: CartItemCell)
+  func cartItemCell(_ cell: CartItemCell, didChangeCount newCount: Int)
 }
 
 final class CartItemCell: UITableViewCell {
@@ -24,8 +26,7 @@ final class CartItemCell: UITableViewCell {
 
   private let countContainerView = UIView() // 스택 뷰에서 변경
 
-  private var unitPrice: Int = 0 // 제품 1개의 가격
-  private var count: Int = 1 // 현재 셀의 수량 (기본값: 1)
+  private var item: CartItem? // 내부 변경 x
 
   // cell.delegate = self 호출 안하면 nil이기 때문에 옵셔널
   weak var delegate: CartItemCellDelegate?
@@ -42,15 +43,14 @@ final class CartItemCell: UITableViewCell {
     fatalError("init(coder:) has not been implemented")
   }
 
-  // MARK: setup
-
+  // setup(UI 구성 요소 및 액션)
   private func setupUI() {
     configureComponents()
     setupActions()
     addSubviews()
   }
-  
-  // MARK: Layout
+
+  // setupLayout(제약조건)
   private func setupLayout() {
     itemLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(12)
@@ -94,8 +94,7 @@ final class CartItemCell: UITableViewCell {
     }
   }
 
-  // MARK: subviews
-
+  // 셀의 서브뷰
   private func addSubviews() {
     for item in [itemLabel, countContainerView, priceLabel, deleteButton] {
       contentView.addSubview(item)
@@ -106,8 +105,7 @@ final class CartItemCell: UITableViewCell {
     }
   }
 
-  // MARK: components
-
+  // 버튼 및 라벨 스타일
   private func configureComponents() {
     minusButton.configure(title: "−")
     plusButton.configure(title: "+")
@@ -119,14 +117,14 @@ final class CartItemCell: UITableViewCell {
     countLabel.textAlignment = .center
   }
 
-  // Actions
+  // 버튼 액션(Target) 연결
   private func setupActions() {
     minusButton.addTarget(self, action: #selector(minusButtonTapped), for: .touchUpInside)
     plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
     deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
   }
 
-  // 1000000 -> "1,000,000" 형식 변경
+  // 1000000의 정수 값을 -> "1,000,000"형식의 문자열 변경
   private func formatPrice(_ price: Int) -> String {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal // 천 단위마다 쉼표를 넣는 형식
@@ -134,40 +132,37 @@ final class CartItemCell: UITableViewCell {
     return formatter.string(from: NSNumber(value: price)) ?? "\(price)"
   }
 
-  // + 버튼 동작
+  // + 버튼 클릭 시 수량 증가 요청 (최대 25까지)
   @objc private func plusButtonTapped() {
-    guard count < 25 else { return } // count 최대 개수 25개
-    count += 1
-    countLabel.text = "\(count)"
-    priceLabel.text = "\(formatPrice(unitPrice * count)) 원"
+    guard let item = item, item.count < 25 else { return }
+    delegate?.cartItemCell(self, didChangeCount: item.count + 1)
   }
 
-  // - 버튼 동작
+  // - 버튼 클릭 시 수량 감소 또는 삭제
   @objc private func minusButtonTapped() {
-    if count <= 1 { // count가 1이하일 때 누르면 DeleteButton과 동일 (셀 삭제)
+    guard let item = item else { return }
+    if item.count <= 1 { // item.count가 1이하일 때 누르면 DeleteButton과 동일 (셀 삭제)
       delegate?.didTapDeleteButton(self)
       return
     }
-    count -= 1
-    countLabel.text = "\(count)"
-    priceLabel.text = "\(formatPrice(unitPrice * count)) 원"
+    delegate?.cartItemCell(self, didChangeCount: item.count - 1)
   }
 
+  // 삭제 버튼 클릭 시 삭제 요청
   @objc private func deleteButtonTapped() {
     delegate?.didTapDeleteButton(self) // CartItemCell에서 삭제 버튼이 눌림을 VC에 알리기 위해
   }
 
-  // 전달받은 값으로 셀 구성
+  // 전달받은 CartItem으로 셀 UI구성
   func configure(item: CartItem) {
+    self.item = item
     itemLabel.text = item.name
     countLabel.text = "\(item.count)"
-    priceLabel.text = "\(formatPrice(item.totalPrice)) 원"
-    unitPrice = item.price
+    priceLabel.text = "\(formatPrice(item.price * item.count)) 원"
   }
 }
 
-// MARK: - UIButton 설정 Extension
-
+// UIButton 설정하기 위한 커스텀 메서드
 private extension UIButton {
   func configure(title: String) {
     self.setTitle(title, for: .normal)

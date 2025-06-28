@@ -13,33 +13,22 @@ struct CartItem {
   let name: String
   var price: Int
   var count: Int
-
-  // 총 금액
-  var totalPrice: Int {
-    return price * count
-  }
 }
 
 final class CartViewController: UIViewController {
   private let tableContainerView = UIView()
   private let tableView = UITableView()
 
-//  private var cartItems: [CartItem] = [ // 더미 데이터
-//    CartItem(name: "갤럭시 S25", price: 1000000, count: 1),
-//    CartItem(name: "갤럭시 버즈", price: 1200000, count: 1)
-//  ]
   private var cartItems: [CartItem] = []
 
-  // MARK: viewDidLoad
-
+  // viewDidLoad
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
     configureTableView()
   }
 
-  // MARK: setup
-
+  // setup(UI 구성 요소 + 제약 조건)
   private func setupUI() {
     view.backgroundColor = .white
 
@@ -62,15 +51,14 @@ final class CartViewController: UIViewController {
     }
   }
 
-  // MARK: TableView Configuration
-
+  // dataSource + delegate 설정 및 셀
   private func configureTableView() {
     tableView.dataSource = self // 몇 개의 셀을 만들지, 어떻게 생겼는지
     tableView.delegate = self // UI 이벤트 처리
     tableView.register(CartItemCell.self, forCellReuseIdentifier: "CartItemCell") // TableView가 사용할 셀 클래스를 미리 등록(CartItemCell)
   }
 
-  // 장바구니 추가 (정의만)
+  // 장바구니에 새로운 아이템 추가, 이미 있다면 수량 증가
   func addItem(_ item: CartItem) {
     // 조건 만족하는 첫 번째를 찾음
     if let index = cartItems.firstIndex(where: { $0.name == item.name }) {
@@ -82,7 +70,7 @@ final class CartViewController: UIViewController {
     }
   }
 
-  // 장바구니 제거
+  // 지정된 인덱스의 아이템을 장바구니에서 제거
   func removeItem(_ index: Int) {
     cartItems.remove(at: index)
     // index 번째 셀을 지움
@@ -90,13 +78,14 @@ final class CartViewController: UIViewController {
   }
 }
 
-// MARK: Data Sourece
-
+// Data Source
 extension CartViewController: UITableViewDataSource {
+  // 장바구니의 개수
   func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
     return cartItems.count
   }
 
+  // cell 구성하고 데이터를 cell에 전달
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     // 등록해뒀던 "CartItemCell" 이름의 셀을 달라고 요청. (셀이 있으면 재사용, 없으면 만듦)
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "CartItemCell", for: indexPath) as? CartItemCell else {
@@ -109,25 +98,30 @@ extension CartViewController: UITableViewDataSource {
   }
 }
 
-// MARK: Delegate
-
+// Delegate(셀 내부 발생 이벤트)
 extension CartViewController: UITableViewDelegate, CartItemCellDelegate {
+  // 셀에서 삭제 버튼이 눌렸을 때 아이템 제거
   func didTapDeleteButton(_ cell: CartItemCell) {
     guard let indexPath = tableView.indexPath(for: cell) else { return }
     removeItem(indexPath.row)
   }
+
+  // 셀에서 수량이 변경될 때 데이터를 수정하고 셀 갱신
+  func cartItemCell(_ cell: CartItemCell, didChangeCount newCount: Int) {
+    guard let indexPath = tableView.indexPath(for: cell) else { return }
+    cartItems[indexPath.row].count = newCount
+    tableView.reloadRows(at: [indexPath], with: .automatic)
+  }
 }
 
-// MARK: ProductPageViewDelegate
-
+// Delegate(상품 목록 페이지에서 발생 이벤트)
 extension CartViewController: ProductPageViewDelegate {
+  // 선택된 상품(Product)을 CartItem으로 변환해서 장바구니 추가
   func productPageView(_ view: ProductPageView, didSelect product: Product) {
-    // 선택된 상품(Product)을 CartItem으로 변환해서 장바구니 추가
     let item = CartItem(name: product.name, price: product.price, count: 1)
     addItem(item)
   }
 
-  func productPageView(_ view: ProductPageView, didUpdateCategory category: String) {
-    // 사용 X. 프로토콜이라 정의만 함
-  }
+  // 카테고리 변경 (사용 x. 프로토콜 요구사항이라 구현만)
+  func productPageView(_ view: ProductPageView, didUpdateCategory category: String) {}
 }
