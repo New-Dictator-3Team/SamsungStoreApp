@@ -68,7 +68,6 @@ final class CartItemCell: UITableViewCell {
   // MARK: setupUIComponents
 
   private func setupUIComponents() {
-    minusButton.configure(title: "−")
     plusButton.configure(title: "+")
     deleteButton.configure(title: "X")
     deleteButton.setTitleColor(.red, for: .normal)
@@ -197,6 +196,21 @@ final class CartItemCell: UITableViewCell {
     itemLabel.text = item.name
     countLabel.text = "\(item.count)"
     priceLabel.text = "\(formatPrice(item.price * item.count)) 원"
+
+    updateMinusButton(item.count)
+  }
+
+  // 개수가 1개 이하라면 trash이미지로 변경
+  private func updateMinusButton(_ count: Int) {
+    minusButton.setTitle(nil, for: .normal)
+    minusButton.setImage(nil, for: .normal)
+
+    if count <= 1 {
+      minusButton.setImage(UIImage(systemName: "trash"), for: .normal)
+      minusButton.tintColor = .red
+    } else {
+      minusButton.configure(title: "−")
+    }
   }
 }
 
