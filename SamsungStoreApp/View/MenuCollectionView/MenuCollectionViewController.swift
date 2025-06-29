@@ -29,7 +29,21 @@ final class MenuCollectionViewController: UIViewController {
     setupUI()
     setupLayout()
     loadCategoryData()
+//    testLink()
   }
+
+  // Menu와 Cart 부분 합치는 임시 코드
+//  private func testLink() {
+//    // CartViewController 인스턴스 생성
+//    let cartVC = CartViewController()
+//    productPageView.delegate = cartVC
+//    addChild(cartVC) // 자식으로 추가
+//    shoppingCart.addSubview(cartVC.view) // 뷰만 하위에 추가
+//    cartVC.didMove(toParent: self) // 부모-자식 연결 완료
+//    cartVC.view.snp.makeConstraints {
+//      $0.edges.equalToSuperview()
+//    }
+//  }
   
   // MARK: - UI 세팅
   
@@ -37,8 +51,8 @@ final class MenuCollectionViewController: UIViewController {
     view.backgroundColor = .systemBackground
     view.addSubview(mainView)
     
-    [categoryTabView, productPageView, shoppingCart, bottomView].forEach {
-      mainView.addSubview($0)
+    for item in [categoryTabView, productPageView, shoppingCart, bottomView] {
+      mainView.addSubview(item)
     }
     
     categoryTabView.delegate = self
@@ -81,14 +95,15 @@ final class MenuCollectionViewController: UIViewController {
     dataService.loadCategories { [weak self] result in
       guard let self = self else { return }
       switch result {
-      case .success(let loadedCategories):
+      case let .success(loadedCategories):
         self.categories = loadedCategories
         DispatchQueue.main.async {
           self.categoryTabView.configure(categories: loadedCategories.map { $0.category })
           if let defaultItems = loadedCategories.first(
             where: {
               $0.category == self.selectedCategory
-            })?.items {
+            })?.items
+          {
             print("✅ 불러온 카테고리 수: \(loadedCategories.count)")
             self.productPageView.configure(with: defaultItems)
           }
@@ -104,11 +119,11 @@ final class MenuCollectionViewController: UIViewController {
 // MARK: - 델리게이트
 
 extension MenuCollectionViewController: CategoryTabViewDelegate {
-    func didTapCategoryButton(selectedCategoryIndex: Int) {
-        let category = categories[selectedCategoryIndex]
-        selectedCategory = category.category
-        productPageView.configure(with: category.items)
-    }
+  func didTapCategoryButton(selectedCategoryIndex: Int) {
+    let category = categories[selectedCategoryIndex]
+    selectedCategory = category.category
+    productPageView.configure(with: category.items)
+  }
 }
 
 // 아래 델리게이트 익스텐션은 마음대로 수정하셔도 됩니다.
