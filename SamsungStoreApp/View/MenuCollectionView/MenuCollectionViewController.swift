@@ -29,21 +29,21 @@ final class MenuCollectionViewController: UIViewController {
     setupUI()
     setupLayout()
     loadCategoryData()
-//    testLink()
+    testLink()
   }
 
   // Menu와 Cart 부분 합치는 임시 코드
-//  private func testLink() {
-//    // CartViewController 인스턴스 생성
-//    let cartVC = CartViewController()
-//    productPageView.delegate = cartVC
-//    addChild(cartVC) // 자식으로 추가
-//    shoppingCart.addSubview(cartVC.view) // 뷰만 하위에 추가
-//    cartVC.didMove(toParent: self) // 부모-자식 연결 완료
-//    cartVC.view.snp.makeConstraints {
-//      $0.edges.equalToSuperview()
-//    }
-//  }
+  private func testLink() {
+    // CartViewController 인스턴스 생성
+    let cartVC = CartViewController()
+    productPageView.delegate = cartVC
+    addChild(cartVC) // 자식으로 추가
+    shoppingCart.addSubview(cartVC.view) // 뷰만 하위에 추가
+    cartVC.didMove(toParent: self) // 부모-자식 연결 완료
+    cartVC.view.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
+  }
   
   // MARK: - UI 세팅
   
