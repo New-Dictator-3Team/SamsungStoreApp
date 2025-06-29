@@ -21,8 +21,6 @@ final class CartView: UIView {
   private let tableContainerView = UIView()
   private let tableView = UITableView()
 
-  let summaryView = CartSummaryView() // CartSummaryView 인스턴스 생성
-
   // MARK: viewDidLoad
 
   override init(frame: CGRect) {
@@ -47,10 +45,7 @@ final class CartView: UIView {
   // MARK: addSubviews
 
   private func addSubviews() {
-    for item in [tableContainerView, summaryView] {
-      addSubview(item)
-    }
-
+    addSubview(tableContainerView)
     tableContainerView.addSubview(tableView)
   }
 
@@ -70,7 +65,6 @@ final class CartView: UIView {
   private func setupLayout() {
     setupTableContainerViewLayout()
     setupTableViewLayout()
-    setupsummaryViewLayout()
   }
 
   // tableContainerView 제약조건
@@ -89,15 +83,6 @@ final class CartView: UIView {
     }
   }
 
-  // summaryView 제약조건
-  private func setupsummaryViewLayout() {
-    summaryView.snp.makeConstraints {
-      $0.top.equalTo(tableView.snp.bottom)
-      $0.leading.trailing.equalToSuperview()
-      $0.height.equalTo(80) // 높이 80 고정
-    }
-  }
-
   // MARK: - configureTableView
 
   // dataSource + delegate 설정 및 셀
@@ -110,7 +95,6 @@ final class CartView: UIView {
   func reload(with items: [CartItem], totalCount: Int, totalPrice: Int) {
     self.displayedItems = items
     tableView.reloadData()
-    summaryView.configure(itemCount: totalCount, totalPrice: totalPrice)
   }
 }
 

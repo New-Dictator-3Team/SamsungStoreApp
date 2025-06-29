@@ -20,6 +20,7 @@ final class ViewController: UIViewController {
   private let categoryTabView = CategoryTabView()
   private let productPageView = ProductPageView()
   private let cartView = CartView()
+  private let summaryView = CartSummaryView()
   private let bottomView = BottomView()
   
   // MARK: - 라이프사이클
@@ -38,7 +39,7 @@ final class ViewController: UIViewController {
       view.backgroundColor = .systemBackground
       view.addSubview(mainView)
       
-      for item in [categoryTabView, productPageView, cartView, bottomView] {
+      for item in [categoryTabView, productPageView, cartView, summaryView, bottomView] {
         mainView.addSubview(item)
       }
       
@@ -65,8 +66,14 @@ final class ViewController: UIViewController {
       
       cartView.snp.makeConstraints {
         $0.leading.trailing.equalToSuperview()
+        $0.bottom.equalTo(summaryView.snp.top)
+        $0.height.equalTo(200)
+      }
+      
+      summaryView.snp.makeConstraints {
+        $0.leading.trailing.equalToSuperview()
         $0.bottom.equalTo(bottomView.snp.top)
-        $0.height.equalTo(250)
+        $0.height.equalTo(80) // 높이 80 고정
       }
       
       bottomView.snp.makeConstraints {
@@ -105,6 +112,7 @@ final class ViewController: UIViewController {
     let totalCount = cartItems.reduce(0) { $0 + $1.count }
     let totalPrice = cartItems.reduce(0) { $0 + ($1.price * $1.count) }
     cartView.reload(with: cartItems, totalCount: totalCount, totalPrice: totalPrice)
+    summaryView.configure(itemCount: totalCount, totalPrice: totalPrice)
   }
 }
 
