@@ -35,7 +35,7 @@ class DataService {
         for category in categories {
           print("- \(category.category)")
           for item in category.items {
-            print("  - \(item.name): \(item.price)")
+            print("  - \(item.image) \(item.name): \(item.price)")
           }
           print("")
         }
@@ -48,7 +48,7 @@ class DataService {
 
 
 // Usage
-//override func viewDidLoad() {
+// override func viewDidLoad() {
 //  super.viewDidLoad()
 //  // Do any additional setup after loading the view.
 //  view.backgroundColor = .systemBlue
@@ -65,4 +65,4 @@ class DataService {
 //    }
 //  }
 ////    dataService.jsonDebug()
-//}
+// }
