@@ -53,8 +53,8 @@ final class ProductGridCell: UIView {
     nameLabel.font = Font.title(size: 14)
     nameLabel.textAlignment = .center
     
-    priceLabel.font = Font.text(size: 13)
-    priceLabel.textColor = .secondaryLabel
+    priceLabel.font = Font.title(size: 15)
+    priceLabel.textColor = AppColorType.highlight
     priceLabel.textAlignment = .center
     
     let stack = UIStackView(arrangedSubviews: [imageView, nameLabel, priceLabel])
