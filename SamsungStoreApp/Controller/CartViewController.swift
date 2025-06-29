@@ -109,8 +109,8 @@ final class CartViewController: UIViewController {
       tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic) // 행만 reload
       updateCartSummary()
     } else { // 존재하지 않으면 추가하고 리로드
-      cartItems.append(item)
-      tableView.reloadData()
+      cartItems.insert(item, at: 0) // 리스트 맨 앞에 추가
+      tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
       updateCartSummary()
     }
   }
