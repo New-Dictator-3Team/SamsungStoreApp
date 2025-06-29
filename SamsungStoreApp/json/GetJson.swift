@@ -58,10 +58,10 @@ class DataService {
 //    case let .success(loadedCategories):
 //      self?.categories = loadedCategories
 //      DispatchQueue.main.async {
-//        print("✅ 불러온 카테고리 수: \(loadedCategories.count)")
+//        print("불러온 카테고리 수: \(loadedCategories.count)")
 //      }
 //    case let .failure(error):
-//      print("🚨 데이터 로딩 실패: \(error)")
+//      print("데이터 로딩 실패: \(error)")
 //    }
 //  }
 ////    dataService.jsonDebug()
