@@ -20,6 +20,7 @@ final class CartViewController: UIViewController {
   private let tableView = UITableView()
 
   private var cartItems: [CartItem] = []
+  let summaryView = CartSummaryView() // CartSummaryView 인스턴스 생성
 
   // MARK: viewDidLoad
 
@@ -28,6 +29,7 @@ final class CartViewController: UIViewController {
     setupUI()
     setupLayout()
     configureTableView()
+    updateCartSummary()
   }
 
   // MARK: setupUI
@@ -40,7 +42,10 @@ final class CartViewController: UIViewController {
   // MARK: addSubviews
 
   private func addSubviews() {
-    view.addSubview(tableContainerView)
+    for item in [tableContainerView, summaryView] {
+      view.addSubview(item)
+    }
+
     tableContainerView.addSubview(tableView)
   }
 
@@ -60,6 +65,7 @@ final class CartViewController: UIViewController {
   private func setupLayout() {
     setupTableContainerViewLayout()
     setupTableViewLayout()
+    setupsummaryViewLayout()
   }
 
   // tableContainerView 제약조건
@@ -78,6 +84,14 @@ final class CartViewController: UIViewController {
     }
   }
 
+  // summaryView 제약조건
+  private func setupsummaryViewLayout() {
+    summaryView.snp.makeConstraints {
+      $0.leading.trailing.bottom.equalToSuperview()
+      $0.height.equalTo(80) // TODO: 높이 어떻게 할지 고민
+    }
+  }
+
   // MARK: - configureTableView
 
   // dataSource + delegate 설정 및 셀
@@ -93,9 +107,11 @@ final class CartViewController: UIViewController {
     if let index = cartItems.firstIndex(where: { $0.name == item.name }) {
       cartItems[index].count += 1
       tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic) // 행만 reload
+      updateCartSummary()
     } else { // 존재하지 않으면 추가하고 리로드
       cartItems.append(item)
       tableView.reloadData()
+      updateCartSummary()
     }
   }
 
@@ -104,6 +120,14 @@ final class CartViewController: UIViewController {
     cartItems.remove(at: index)
     // index 번째 셀을 지움
     tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+    updateCartSummary()
+  }
+
+  // 총 금액, 개수 업데이트
+  private func updateCartSummary() {
+    let totalCount = cartItems.reduce(0) { $0 + $1.count }
+    let totalPrice = cartItems.reduce(0) { $0 + ($1.price * $1.count) }
+    summaryView.configure(itemCount: totalCount, totalPrice: totalPrice)
   }
 }
 
@@ -143,6 +167,7 @@ extension CartViewController: UITableViewDelegate, CartItemCellDelegate {
     guard let indexPath = tableView.indexPath(for: cell) else { return }
     cartItems[indexPath.row].count = newCount
     tableView.reloadRows(at: [indexPath], with: .automatic)
+    updateCartSummary()
   }
 }
 
@@ -156,9 +181,11 @@ extension CartViewController: ProductPageViewDelegate {
       guard cartItems[index].count < 25 else { return }
       cartItems[index].count += 1
       tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+      updateCartSummary()
     } else {
       let item = CartItem(name: product.name, price: PriceFormatter.format(product.price), count: 1)
       addItem(item)
+      updateCartSummary()
     }
   }
 
