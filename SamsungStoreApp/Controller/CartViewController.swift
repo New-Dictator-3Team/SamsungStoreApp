@@ -121,9 +121,9 @@ extension CartViewController: UITableViewDelegate, CartItemCellDelegate {
 // MARK: ProductPageViewDelegate
 
 extension CartViewController: ProductPageViewDelegate {
-  func productPageView(_ view: ProductPageView, didSelect product: Product) {
+  func productPageView(_ view: ProductPageView, didSelect product: ProductItem) {
     // 선택된 상품(Product)을 CartItem으로 변환해서 장바구니 추가
-    let item = CartItem(name: product.name, price: product.price, count: 1)
+    let item = CartItem(name: product.name, price: Int(product.price) ?? 0, count: 1)
     addItem(item)
   }
 

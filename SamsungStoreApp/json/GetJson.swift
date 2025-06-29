@@ -14,7 +14,7 @@ class DataService {
   }
 
   func loadCategories(completion: @escaping (Result<[Category], Error>) -> Void) {
-    guard let path = Bundle.main.path(forResource: "product", ofType: "json") else {
+    guard let path = Bundle.main.path(forResource: "Product", ofType: "json") else {
       completion(.failure(DataError.fileNotFound))
       return
     }
@@ -35,7 +35,7 @@ class DataService {
         for category in categories {
           print("- \(category.category)")
           for item in category.items {
-            print("  - \(item.name): \(item.price)")
+            print("  - \(item.image) \(item.name): \(item.price)")
           }
           print("")
         }
@@ -48,7 +48,7 @@ class DataService {
 
 
 // Usage
-//override func viewDidLoad() {
+// override func viewDidLoad() {
 //  super.viewDidLoad()
 //  // Do any additional setup after loading the view.
 //  view.backgroundColor = .systemBlue
@@ -65,4 +65,4 @@ class DataService {
 //    }
 //  }
 ////    dataService.jsonDebug()
-//}
+// }

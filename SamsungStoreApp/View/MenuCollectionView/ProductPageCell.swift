@@ -9,17 +9,20 @@ import SnapKit
 import UIKit
 
 final class ProductPageCell: UICollectionViewCell {
-  // MARK: -
+  // MARK: - UI 컴포넌트
 
   private let verticalStack = UIStackView() // 수직 스택
   private var cells: [ProductGridCell] = []
-  var tapHandler: ((Product) -> Void)?
+  
+  // MARK: - 핸들러
+  
+  var tapHandler: ((ProductItem) -> Void)?
 
-  // MARK: -
+  // MARK: - 초기화
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    setupView()
+    setupUI()
     setupLayout()
   }
 
@@ -28,15 +31,14 @@ final class ProductPageCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
 
-  // MARK: -
+  // MARK: - UI 세팅
 
-  private func setupView() {
+  private func setupUI() {
     verticalStack.axis = .vertical
     verticalStack.spacing = 24
     verticalStack.distribution = .fillEqually
-    contentView.addSubview(verticalStack) // 컨텐츠 뷰에 수직 스택을 넣음. 그 수직 스택에는 수평 스택이 들어 있다.
+    contentView.addSubview(verticalStack)
 
-    // 2 rows
     for _ in 0..<2 {
       let rowStack = UIStackView()
       rowStack.axis = .horizontal
@@ -44,10 +46,10 @@ final class ProductPageCell: UICollectionViewCell {
       rowStack.distribution = .fillEqually
 
       for _ in 0..<2 {
-        let cell = ProductGridCell()
-        cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cellTapped(_:))))
-        cells.append(cell)
-        rowStack.addArrangedSubview(cell)
+        let grid = ProductGridCell()
+        grid.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cellTapped(_:))))
+        rowStack.addArrangedSubview(grid)
+        cells.append(grid)
       }
       verticalStack.addArrangedSubview(rowStack)
     }
@@ -59,18 +61,41 @@ final class ProductPageCell: UICollectionViewCell {
     }
   }
 
-  // MARK: -
+  // MARK: - 구성
   
-  func configure(with products: [Product]) {
+  func configure(with products: [ProductItem]) {
     for (index, cell) in cells.enumerated() {
       if index < products.count {
         cell.isHidden = false
         cell.product = products[index]
       } else {
         cell.isHidden = true
+        cell.product = nil //
       }
     }
+    
+    for (rowIndex, rowStack) in verticalStack.arrangedSubviews.enumerated() {
+        guard let rowStack = rowStack as? UIStackView else { continue }
+
+        // 먼저 기존 spacer 뷰가 있다면 제거
+        rowStack.arrangedSubviews
+          .filter { !($0 is ProductGridCell) }
+          .forEach { $0.removeFromSuperview() }
+
+        // row별 유효 셀 개수 계산
+        let startIndex = rowIndex * 2
+        let endIndex = min(startIndex + 2, products.count)
+        let visibleCount = endIndex - startIndex
+
+        if visibleCount == 1 {
+          // 한 셀만 있을 경우, 나머지 공간 채우기용 UIView 추가
+          let spacer = UIView()
+          rowStack.addArrangedSubview(spacer)
+        }
+      }
   }
+  
+  // MARK: - 액션
 
   @objc private func cellTapped(_ sender: UITapGestureRecognizer) {
     guard let cell = sender.view as? ProductGridCell,
