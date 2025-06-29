@@ -188,14 +188,6 @@ final class CartItemCell: UITableViewCell {
     delegate?.didTapDeleteButton(self) // CartItemCell에서 삭제 버튼이 눌림을 VC에 알리기 위해
   }
 
-  // 1000000의 정수 값을 -> "1,000,000"형식의 문자열 변경
-  private func formatPrice(_ price: Int) -> String {
-    let formatter = NumberFormatter()
-    formatter.numberStyle = .decimal // 천 단위마다 쉼표를 넣는 형식
-    formatter.locale = Locale(identifier: "ko_KR")
-    return formatter.string(from: NSNumber(value: price)) ?? "\(price)"
-  }
-
   // MARK: - configure
 
   // 전달받은 CartItem으로 셀 UI구성
@@ -203,7 +195,7 @@ final class CartItemCell: UITableViewCell {
     self.item = item
     itemLabel.text = item.name
     countLabel.text = "\(item.count)"
-    priceLabel.text = "\(formatPrice(item.price * item.count)) 원"
+    priceLabel.text = "\(PriceFormatter.format(item.price * item.count)) 원"
 
     updateMinusButton(item.count)
   }

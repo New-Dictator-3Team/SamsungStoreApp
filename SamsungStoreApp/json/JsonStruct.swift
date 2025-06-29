@@ -3,6 +3,7 @@ import Foundation
 // MARK: - ProductItem
 
 struct ProductItem: Decodable {
+  let image: String
   let name: String
   let price: String
 }
