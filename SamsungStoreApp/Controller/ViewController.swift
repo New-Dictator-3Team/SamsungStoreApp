@@ -14,11 +14,12 @@ final class ViewController: UIViewController {
   private var categories: [Category] = []
   private var selectedCategory = "모바일"
   private let dataService = DataService()
+  private var cartItems: [CartItem] = []
   
   private let mainView = UIView()
   private let categoryTabView = CategoryTabView()
   private let productPageView = ProductPageView()
-  private let cartView = UIView() // 더미 뷰
+  private let cartView = CartView()
   private let bottomView = BottomView()
   
   // MARK: - 라이프사이클
@@ -28,21 +29,8 @@ final class ViewController: UIViewController {
     setupUI()
     setupLayout()
     loadCategoryData()
-    testLink()
   }
- 
-    // Menu와 Cart 부분 합치는 임시 코드
-    private func testLink() {
-      // CartViewController 인스턴스 생성
-      let cartVC = CartViewController()
-      productPageView.delegate = cartVC
-      addChild(cartVC) // 자식으로 추가
-      cartView.addSubview(cartVC.view) // 뷰만 하위에 추가
-      cartVC.didMove(toParent: self) // 부모-자식 연결 완료
-      cartVC.view.snp.makeConstraints {
-        $0.edges.equalToSuperview()
-      }
-    }
+
     
     // MARK: - UI 세팅
     
@@ -56,6 +44,7 @@ final class ViewController: UIViewController {
       
       categoryTabView.delegate = self
       productPageView.delegate = self
+      cartView.delegate = self
     }
     
     private func setupLayout() {
@@ -111,6 +100,12 @@ final class ViewController: UIViewController {
       }
   //    dataService.jsonDebug()
     }
+  
+  private func updateCartView() {
+    let totalCount = cartItems.reduce(0) { $0 + $1.count }
+    let totalPrice = cartItems.reduce(0) { $0 + ($1.price * $1.count) }
+    cartView.reload(with: cartItems, totalCount: totalCount, totalPrice: totalPrice)
+  }
 }
 
 // MARK: - 델리게이트
@@ -122,7 +117,26 @@ extension ViewController: CategoryTabViewDelegate, ProductPageViewDelegate {
   }
 
   func productPageView(_ view: ProductPageView, didSelect product: ProductItem) {
-    print("선택한 상품: \(product.name), 가격: \(product.price)")
-    // 광용님 내용
+    if let index = cartItems.firstIndex(where: { $0.name == product.name }) {
+      guard cartItems[index].count < 25 else { return }
+      cartItems[index].count += 1
+      updateCartView()
+    } else {
+      let item = CartItem(name: product.name, price: PriceFormatter.format(product.price), count: 1)
+      cartItems.insert(item, at: 0)
+      updateCartView()
+    }
+  }
+}
+
+extension ViewController: CartViewDelegate {
+  func cartView(_ cartView: CartView, didTapDeleteAt index: Int) {
+    cartItems.remove(at: index)
+    updateCartView()
+  }
+
+  func cartView(_ cartView: CartView, didChangeCountAt index: Int, to newCount: Int) {
+    cartItems[index].count = newCount
+    updateCartView()
   }
 }
