@@ -49,9 +49,9 @@ final class CartViewController: UIViewController {
   private func setupUIComponents() {
     view.backgroundColor = .white
 
-    tableContainerView.layer.cornerRadius = 12
-    tableContainerView.layer.borderColor = UIColor.black.cgColor
-    tableContainerView.layer.borderWidth = 1
+    tableContainerView.layer.cornerRadius = 8
+    tableContainerView.layer.borderColor = UIColor.lightGray.cgColor
+    tableContainerView.layer.borderWidth = 0.5
     tableContainerView.clipsToBounds = true
   }
 

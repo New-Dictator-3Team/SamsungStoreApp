@@ -72,9 +72,9 @@ final class CartItemCell: UITableViewCell {
     deleteButton.configure(title: "X")
     deleteButton.setTitleColor(.red, for: .normal)
 
-    itemLabel.textAlignment = .left
-    priceLabel.textAlignment = .right
-    countLabel.textAlignment = .center
+    itemLabel.configureLabel(font: Font.title(size: 14), colorHex: "#000000", alignment: .left)
+    countLabel.configureLabel(font: Font.title(size: 14), colorHex: "#000000", alignment: .center)
+    priceLabel.configureLabel(font: Font.text(size: 13), colorHex: "#000000", alignment: .right)
   }
 
   // MARK: setupLayout
@@ -82,63 +82,71 @@ final class CartItemCell: UITableViewCell {
   private func setupLayout() {
     setupItemLabelLayout()
     setupCountContainerViewLayout()
-    setupPlusButtonLayout()
-    setupCountLabelLayout()
-    setupDeleteButtonLayout()
-    setupPriceLabelLayout()
     setupMinusButtonLayout()
+    setupCountLabelLayout()
+    setupPlusButtonLayout()
+    setupPriceLabelLayout()
+    setupDeleteButtonLayout()
   }
 
   // itemLabel 제약조건
   private func setupItemLabelLayout() {
     itemLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(12)
+      $0.trailing.equalTo(countContainerView.snp.leading)
       $0.centerY.equalToSuperview()
-      $0.width.equalTo(190)
     }
   }
 
-  // countContainerView 제약조건
+  // countContainerView 제약조건 (가운데 카운트 영역은 위치, 크기 고정)
   private func setupCountContainerViewLayout() {
     countContainerView.snp.makeConstraints {
       $0.centerY.equalToSuperview()
-      $0.width.equalTo(112) // 44 + 24 + 44
-      $0.leading.equalTo(itemLabel.snp.trailing)
-      $0.trailing.equalTo(priceLabel.snp.leading)
+      $0.centerX.equalToSuperview()
+
+      // 가운데 위치 고정을 위해
+      $0.width.greaterThanOrEqualTo(94).priority(.high) // 최소 36 + 22 + 36
+      $0.width.lessThanOrEqualTo(110).priority(.required) // 최대 44 + 22 + 44
+      $0.height.equalTo(44)
     }
   }
 
   // minusButton 제약조건
   private func setupMinusButtonLayout() {
     minusButton.snp.makeConstraints {
-      $0.leading.top.bottom.equalToSuperview()
-      $0.width.height.equalTo(44)
+      $0.leading.equalToSuperview()
+      $0.centerY.equalToSuperview()
+      $0.width.greaterThanOrEqualTo(36).priority(.high) // 최소 36
+      $0.width.lessThanOrEqualTo(44).priority(.required) // 최대 44
     }
   }
 
   // countLabel 제약조건
   private func setupCountLabelLayout() {
     countLabel.snp.remakeConstraints {
-      $0.centerY.equalToSuperview()
       $0.leading.equalTo(minusButton.snp.trailing)
+      $0.centerY.equalToSuperview()
       $0.trailing.equalTo(plusButton.snp.leading)
     }
+    countLabel.setContentCompressionResistancePriority(.required, for: .horizontal) // 작아지지 않도록
   }
 
   // plusButton 제약조건
   private func setupPlusButtonLayout() {
     plusButton.snp.makeConstraints {
-      $0.trailing.top.bottom.equalToSuperview()
-      $0.width.height.equalTo(44)
+      $0.trailing.equalToSuperview()
+      $0.centerY.equalToSuperview()
+      $0.width.greaterThanOrEqualTo(36).priority(.high)
+      $0.width.lessThanOrEqualTo(44).priority(.required)
     }
   }
 
   // priceLabel 제약조건
   private func setupPriceLabelLayout() {
     priceLabel.snp.makeConstraints {
-      $0.centerY.equalToSuperview()
+      $0.leading.equalTo(countContainerView.snp.trailing)
       $0.trailing.equalTo(deleteButton.snp.leading)
-      $0.width.equalTo(110)
+      $0.centerY.equalToSuperview()
     }
   }
 
@@ -220,5 +228,15 @@ private extension UIButton {
   func configure(title: String) {
     self.setTitle(title, for: .normal)
     self.setTitleColor(.systemBlue, for: .normal)
+  }
+}
+
+// MARK: - UILabel Method
+
+private extension UILabel {
+  func configureLabel(font: UIFont, colorHex: String, alignment: NSTextAlignment) {
+    self.font = font
+    self.textColor = UIColor(hex: colorHex)
+    self.textAlignment = alignment
   }
 }
