@@ -87,8 +87,9 @@ final class CartViewController: UIViewController {
   // summaryView 제약조건
   private func setupsummaryViewLayout() {
     summaryView.snp.makeConstraints {
-      $0.leading.trailing.bottom.equalToSuperview()
-      $0.height.equalTo(80) // TODO: 높이 어떻게 할지 고민
+      $0.top.equalTo(tableView.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(80) // 높이 80 고정
     }
   }
 

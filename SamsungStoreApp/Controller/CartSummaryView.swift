@@ -51,22 +51,18 @@ final class CartSummaryView: UIView {
     setupWonLabel()
   }
 
-  // TODO: 아래 폰트나 색상 등 나중에 변경 예정. 임시로 값 줌
   private func setupItemCountLabel() {
-    itemCountLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-    itemCountLabel.textColor = .darkGray
+    itemCountLabel.configureLabel(font: Font.text(size: 12), colorHex: "#4A4A4A", alignment: .right)
   }
 
   private func setupTotalPriceLabel() {
-    totalPriceLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-    totalPriceLabel.textColor = UIColor.systemBlue // 색상 변경 예정
+    totalPriceLabel.configureLabel(font: Font.title(size: 24), colorHex: "#2189FF", alignment: .right)
     totalPriceLabel.adjustsFontSizeToFitWidth = true
   }
 
   private func setupWonLabel() {
     wonLabel.text = "원"
-    wonLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-    wonLabel.textColor = .black
+    wonLabel.configureLabel(font: Font.title(size: 16), colorHex: "#000000", alignment: .right)
   }
 
   // MARK: setupLayout

@@ -68,13 +68,24 @@ final class CartItemCell: UITableViewCell {
   // MARK: setupUIComponents
 
   private func setupUIComponents() {
+    setupButtons()
+    setupLabels()
+    setupDeleteButtonColor()
+  }
+
+  private func setupButtons() {
     plusButton.configure(title: "+")
     deleteButton.configure(title: "X")
-    deleteButton.setTitleColor(.red, for: .normal)
+  }
 
+  private func setupLabels() {
     itemLabel.configureLabel(font: Font.title(size: 14), colorHex: "#000000", alignment: .left)
     countLabel.configureLabel(font: Font.title(size: 14), colorHex: "#000000", alignment: .center)
     priceLabel.configureLabel(font: Font.text(size: 13), colorHex: "#000000", alignment: .right)
+  }
+
+  private func setupDeleteButtonColor() {
+    deleteButton.setTitleColor(.red, for: .normal)
   }
 
   // MARK: setupLayout
@@ -225,7 +236,7 @@ private extension UIButton {
 
 // MARK: - UILabel Method
 
-private extension UILabel {
+extension UILabel {
   func configureLabel(font: UIFont, colorHex: String, alignment: NSTextAlignment) {
     self.font = font
     self.textColor = UIColor(hex: colorHex)
