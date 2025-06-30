@@ -18,8 +18,7 @@ final class ViewController: UIViewController {
   
   private let mainView = UIView()
   let categoryTabView = CategoryTabView()
-  let productPageView = ProductPageView()
-  private let cartView = CartView()
+  let scrollProductCartView = ScrollProductCartView()
   private let summaryView = CartSummaryView()
   private let bottomView = BottomView()
   
@@ -37,14 +36,14 @@ final class ViewController: UIViewController {
   private func setupUI() {
     view.backgroundColor = .systemBackground
     view.addSubview(mainView)
-      
-    for item in [categoryTabView, productPageView, cartView, summaryView, bottomView] {
+    
+    for item in [categoryTabView, scrollProductCartView, summaryView, bottomView] {
       mainView.addSubview(item)
     }
-      
-    categoryTabView.delegate = self
-    productPageView.delegate = self
-    cartView.delegate = self
+    
+    categoryTabView.delegate = self    
+    scrollProductCartView.productPageView.delegate = self
+    scrollProductCartView.cartView.delegate = self
     bottomView.delegate = self
   }
     
@@ -55,19 +54,13 @@ final class ViewController: UIViewController {
       
     categoryTabView.snp.makeConstraints {
       $0.top.leading.trailing.equalToSuperview()
-      // $0.height.equalTo(76) // 얘가 범근님 뷰컨엔 없음
+      $0.height.equalTo(65)
     }
-      
-    productPageView.snp.makeConstraints {
+    
+    scrollProductCartView.snp.makeConstraints {
       $0.top.equalTo(categoryTabView.snp.bottom)
       $0.leading.trailing.equalToSuperview()
-      $0.bottom.equalTo(cartView.snp.top)
-    }
-      
-    cartView.snp.makeConstraints {
-      $0.leading.trailing.equalToSuperview()
       $0.bottom.equalTo(summaryView.snp.top)
-      $0.height.equalTo(200)
     }
       
     summaryView.snp.makeConstraints {
@@ -98,7 +91,7 @@ final class ViewController: UIViewController {
             })?.items
           {
             print("✅ 불러온 카테고리 수: \(loadedCategories.count)")
-            self.productPageView.configure(with: defaultItems)
+            self.scrollProductCartView.productPageView.configure(with: defaultItems)
           }
         }
       case let .failure(error):
@@ -111,7 +104,7 @@ final class ViewController: UIViewController {
   func updateCartView() {
     let totalCount = cartItems.reduce(0) { $0 + $1.count }
     let totalPrice = cartItems.reduce(0) { $0 + ($1.price * $1.count) }
-    cartView.reload(with: cartItems, totalCount: totalCount, totalPrice: totalPrice)
+    scrollProductCartView.cartView.reload(with: cartItems, totalCount: totalCount, totalPrice: totalPrice)
     summaryView.configure(itemCount: totalCount, totalPrice: totalPrice)
     bottomView.updateButtonsEnabled(totalCount != 0)
   }
