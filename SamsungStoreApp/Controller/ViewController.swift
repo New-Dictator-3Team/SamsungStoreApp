@@ -113,5 +113,6 @@ final class ViewController: UIViewController {
     let totalPrice = cartItems.reduce(0) { $0 + ($1.price * $1.count) }
     cartView.reload(with: cartItems, totalCount: totalCount, totalPrice: totalPrice)
     summaryView.configure(itemCount: totalCount, totalPrice: totalPrice)
+    bottomView.updateButtonsEnabled(totalCount != 0)
   }
 }
