@@ -29,6 +29,7 @@ final class ViewController: UIViewController {
     setupUI()
     setupLayout()
     loadCategoryData()
+    updateCartView() // 장바구니 초기 안내문구
   }
     
   // MARK: - UI 세팅
@@ -105,6 +106,9 @@ final class ViewController: UIViewController {
     let totalCount = cartItems.reduce(0) { $0 + $1.count }
     let totalPrice = cartItems.reduce(0) { $0 + ($1.price * $1.count) }
 
+    // 장바구니 비어 있을 경우에 안내 문구 표시
+    scrollProductCartView.cartView.updateEmptyLabel(isEmpty: cartItems.isEmpty)
+    
     scrollProductCartView.cartView.reload()
     summaryView.configure(itemCount: totalCount, totalPrice: totalPrice)
     bottomView.updateButtonsEnabled(totalCount != 0)

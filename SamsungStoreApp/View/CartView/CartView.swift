@@ -12,6 +12,7 @@ import UIKit
 final class CartView: UIView {
   private let tableContainerView = UIView()
   let tableView = UITableView()
+  let emptyLabel = UILabel()
 
   // MARK: viewDidLoad
 
@@ -45,6 +46,11 @@ final class CartView: UIView {
 
   private func setupUIComponents() {
       backgroundColor = AppColorType.background
+    
+    emptyLabel.text = "장바구니 안에 담긴 상품이 없습니다."
+    emptyLabel.textAlignment = .center
+    emptyLabel.textColor = .secondaryLabel
+    emptyLabel.font = Font.title(size: 16)
 
     tableContainerView.layer.cornerRadius = 8
     tableContainerView.layer.borderColor = UIColor.lightGray.cgColor
@@ -83,5 +89,9 @@ final class CartView: UIView {
 
   func reload() {
     tableView.reloadData()
+  }
+  
+  func updateEmptyLabel(isEmpty: Bool) { // 장바구니 비어 있을 경우에 안내 문구 표시
+    tableView.backgroundView = isEmpty ? emptyLabel : nil
   }
 }
