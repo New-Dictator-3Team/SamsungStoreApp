@@ -6,9 +6,17 @@
 //
 
 import UIKit
+import SnapKit
+
+protocol BottomViewDelegate: AnyObject {
+  func didTapClearButton()
+  func didTapPayButton()
+}
 
 /// 하단 결제/취소 버튼 뷰
 class BottomView: UIView {
+  weak var delegate: BottomViewDelegate?
+  
   // 버튼 생성
   private let clearButton: BottomButton = .init(title: "전체 취소", type: .clear, fontSize: 18)
   private let payButton: BottomButton = .init(title: "결제하기", type: .pay, fontSize: 18)
@@ -43,5 +51,17 @@ class BottomView: UIView {
       $0.leading.trailing.equalToSuperview().inset(24)
       $0.top.bottom.equalToSuperview()
     }
+    
+    clearButton.setAction(self, action: #selector(clearButtonTapped))
+    payButton.setAction(self, action: #selector(payButtonTapped))
+  }
+  
+  // MARK: - 버튼 액션 핸들러
+  @objc private func clearButtonTapped() {
+    delegate?.didTapClearButton()
+  }
+  
+  @objc private func payButtonTapped() {
+    delegate?.didTapPayButton()
   }
 }

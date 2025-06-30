@@ -45,6 +45,7 @@ final class ViewController: UIViewController {
     categoryTabView.delegate = self
     productPageView.delegate = self
     cartView.delegate = self
+    bottomView.delegate = self
   }
     
   private func setupLayout() {

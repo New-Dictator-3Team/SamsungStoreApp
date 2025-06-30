@@ -28,7 +28,7 @@ extension ViewController: CategoryTabViewDelegate, ProductPageViewDelegate {
   }
 }
 
-extension ViewController: CartViewDelegate {
+extension ViewController: CartViewDelegate, BottomViewDelegate {
   func cartView(_ cartView: CartView, didTapDeleteAt index: Int) {
     cartItems.remove(at: index)
     updateCartView()
@@ -37,5 +37,28 @@ extension ViewController: CartViewDelegate {
   func cartView(_ cartView: CartView, didChangeCountAt index: Int, to newCount: Int) {
     cartItems[index].count = newCount
     updateCartView()
+  }
+  
+  // 주문 전체 취소
+  func didTapClearButton() {
+    showAlert(title: "주문 취소", message: "주문 내역을 모두 삭제하시겠습니까?") {
+      self.cartItems.removeAll()
+      self.updateCartView()
+    }
+  }
+  
+  func didTapPayButton() {
+    
+  }
+  
+  private func showAlert(title: String, message: String, onConfirm: @escaping () -> Void) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    
+    alert.addAction(UIAlertAction(title: "아니오", style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "네", style: .destructive, handler: { _ in
+      onConfirm()
+    }))
+    
+    present(alert, animated: true)
   }
 }
