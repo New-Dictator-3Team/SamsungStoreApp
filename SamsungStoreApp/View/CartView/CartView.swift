@@ -44,12 +44,12 @@ final class CartView: UIView {
   // MARK: setupUIComponents
 
   private func setupUIComponents() {
-      backgroundColor = AppColorType.background
-
     tableContainerView.layer.cornerRadius = 8
     tableContainerView.layer.borderColor = UIColor.lightGray.cgColor
     tableContainerView.layer.borderWidth = 0.5
     tableContainerView.clipsToBounds = true
+    
+    tableView.backgroundColor = AppColorType.background
   }
 
   // MARK: setupLayout

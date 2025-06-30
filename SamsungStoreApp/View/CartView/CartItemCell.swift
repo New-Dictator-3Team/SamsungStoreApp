@@ -49,6 +49,7 @@ final class CartItemCell: UITableViewCell {
   // MARK: - setupUI
 
   private func setupUI() {
+    backgroundColor = AppColorType.background
     addSubviews()
     setupUIComponents()
   }
@@ -79,9 +80,9 @@ final class CartItemCell: UITableViewCell {
   }
 
   private func setupLabels() {
-    itemLabel.configureLabel(font: Font.title(size: 14), colorHex: "#000000", alignment: .left)
-    countLabel.configureLabel(font: Font.title(size: 14), colorHex: "#000000", alignment: .center)
-    priceLabel.configureLabel(font: Font.text(size: 13), colorHex: "#000000", alignment: .right)
+    itemLabel.configureLabel(font: Font.title(size: 14), color: AppColorType.secondary, alignment: .left)
+    countLabel.configureLabel(font: Font.title(size: 14), color: AppColorType.secondary, alignment: .center)
+    priceLabel.configureLabel(font: Font.text(size: 13), color: AppColorType.secondary, alignment: .right)
   }
 
   private func setupDeleteButtonColor() {
@@ -238,9 +239,9 @@ private extension UIButton {
 // MARK: - UILabel Method
 
 extension UILabel {
-  func configureLabel(font: UIFont, colorHex: String, alignment: NSTextAlignment) {
+  func configureLabel(font: UIFont, color: UIColor, alignment: NSTextAlignment) {
     self.font = font
-    self.textColor = UIColor(hex: colorHex)
+    self.textColor = color
     self.textAlignment = alignment
   }
 }
