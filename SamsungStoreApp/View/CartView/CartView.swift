@@ -17,7 +17,7 @@ protocol CartViewDelegate: AnyObject {
 final class CartView: UIView {
   weak var delegate: CartViewDelegate?
   private var displayedItems: [CartItem] = []
-  
+
   private let tableContainerView = UIView()
   private let tableView = UITableView()
 
@@ -30,11 +30,11 @@ final class CartView: UIView {
     configureTableView()
   }
 
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  
   // MARK: setupUI
 
   private func setupUI() {
@@ -134,5 +134,4 @@ extension CartView: UITableViewDelegate, CartItemCellDelegate {
     guard let indexPath = tableView.indexPath(for: cell) else { return }
     delegate?.cartView(self, didChangeCountAt: indexPath.row, to: newCount)
   }
-
 }

@@ -209,7 +209,6 @@ final class CartItemCell: UITableViewCell {
     priceLabel.text = "\(PriceFormatter.format(item.price * item.count)) 원"
 
     updateMinusButton(item.count)
-    plusButton.tintColor = item.count == 25 ? AppColorType.division : .red
     plusButton.setTitleColor(item.count >= 25 ? AppColorType.division : .systemBlue, for: .normal)
   }
 
