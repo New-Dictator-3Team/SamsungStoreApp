@@ -105,6 +105,13 @@ final class ViewController: UIViewController {
   func updateCartView() {
     let totalCount = cartItems.reduce(0) { $0 + $1.count }
     let totalPrice = cartItems.reduce(0) { $0 + ($1.price * $1.count) }
+    
+    // 셀 하나당 세로 44
+    let rowHeight: CGFloat = 44
+    
+    // 셀 최소 4개의 공간 확보 (장바구니 비어있을 때 알림 공간), 4개 이상부터 셀이 늘어남. (max함수 사용)
+    let totalHeight = max(rowHeight * 4, rowHeight * CGFloat(cartItems.count))
+    scrollProductCartView.updateHeight(totalHeight)
 
     // 장바구니 비어 있을 경우에 안내 문구 표시
     scrollProductCartView.cartView.updateEmptyLabel(isEmpty: cartItems.isEmpty)

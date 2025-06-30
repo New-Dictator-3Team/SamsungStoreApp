@@ -58,8 +58,19 @@ final class ScrollProductCartView: UIScrollView {
     cartView.snp.makeConstraints {
       $0.top.equalTo(productPageView.snp.bottom)
       $0.leading.trailing.equalToSuperview()
-      $0.bottom.equalToSuperview()
-      $0.height.equalTo(200) // 컨텐츠 길이에 따라 유동적으로 바뀌게 하시려면 지울 필요가 있습니다
+//      $0.bottom.equalToSuperview()
+//      $0.height.equalTo(1000) // 컨텐츠 길이에 따라 유동적으로 바뀌게 하시려면 지울 필요가 있습니다
+    }
+  }
+  
+  func updateHeight(_ height: CGFloat) { // 176
+    cartView.updateHeight(height)
+    
+    cartView.snp.remakeConstraints {
+      $0.top.equalTo(productPageView.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
+//      $0.bottom.equalToSuperview()
+      $0.height.equalTo(height) // 컨텐츠 길이에 따라 유동적으로 바뀌게 하시려면 지울 필요가 있습니다
     }
   }
 }
