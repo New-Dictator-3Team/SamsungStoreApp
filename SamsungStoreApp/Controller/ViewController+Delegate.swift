@@ -57,7 +57,7 @@ extension ViewController: CartViewDelegate, BottomViewDelegate {
       
       self.categoryTabView.updateButtonState(index: 0)
       let selectedItems = self.categories[0].items
-        self.scrollProductCartView.productPageView.configure(with: selectedItems)
+      self.scrollProductCartView.productPageView.configure(with: selectedItems)
       
       self.showSuccessAlert()
     }

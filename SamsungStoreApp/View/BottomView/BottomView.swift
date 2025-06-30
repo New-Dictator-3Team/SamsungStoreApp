@@ -48,7 +48,7 @@ class BottomView: UIView {
   private func setupUI() {
     addSubview(bottomButtonStack)
     bottomButtonStack.snp.makeConstraints {
-      $0.leading.trailing.equalToSuperview().inset(24)
+      $0.leading.trailing.equalToSuperview().inset(16)
       $0.top.bottom.equalToSuperview()
     }
     

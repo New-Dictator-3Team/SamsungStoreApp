@@ -8,12 +8,8 @@ enum ActionType {
     switch self {
     case .clear:
       return AppColorType.background
-        //주간: 하양
-        //야간: 검정
     case .pay:
       return AppColorType.secondary
-        //주간: 검정
-        //야간: 하양
     }
   }
 
@@ -46,6 +42,11 @@ final class BottomButton: UIButton {
     layer.cornerRadius = 15
     layer.borderWidth = 2
     layer.borderColor = AppColorType.secondary.cgColor
+  }
+  
+  override func layoutSubviews() { // 높이값이 정해진 후에 이 함수가 호출됨
+    super.layoutSubviews()
+    layer.cornerRadius = bounds.height / 2 // 둥글어짐
   }
   
   func setAction(_ target: Any?, action: Selector) {
