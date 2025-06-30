@@ -17,7 +17,7 @@ final class ViewController: UIViewController {
   private let dataService = DataService()
   
   private let mainView = UIView()
-  private let categoryTabView = CategoryTabView()
+  let categoryTabView = CategoryTabView()
   let productPageView = ProductPageView()
   private let cartView = CartView()
   private let summaryView = CartSummaryView()
