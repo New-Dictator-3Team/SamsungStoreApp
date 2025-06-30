@@ -39,9 +39,14 @@ final class BottomButton: UIButton {
     setTitleColor(type.textColor, for: .normal)
     titleLabel?.font = Font.text(size: fontSize)
     backgroundColor = type.backgroundColor
-    layer.cornerRadius = 20
+//    layer.cornerRadius = 20
     layer.borderWidth = 2
     layer.borderColor = AppColorType.secondary.cgColor
+  }
+  
+  override func layoutSubviews() { // 높이값이 정해진 후에 이 함수가 호출됨
+    super.layoutSubviews()
+    layer.cornerRadius = bounds.height / 2 // 둥글어짐
   }
   
   func setAction(_ target: Any?, action: Selector) {
