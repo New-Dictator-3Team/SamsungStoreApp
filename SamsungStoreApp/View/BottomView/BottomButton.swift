@@ -18,7 +18,7 @@ enum ActionType {
     case .clear:
       return AppColorType.secondary
     case .pay:
-      return AppColorType.highlight
+      return AppColorType.background
     }
   }
 }
