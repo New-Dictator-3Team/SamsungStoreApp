@@ -40,7 +40,7 @@ final class ProductGridCell: UIView {
   // MARK: - UI 세팅
   
   private func setupUI() {
-    backgroundColor = .white
+      backgroundColor = AppColorType.background
     layer.cornerRadius = 8
     layer.borderWidth = 0.5
     layer.borderColor = UIColor.lightGray.cgColor

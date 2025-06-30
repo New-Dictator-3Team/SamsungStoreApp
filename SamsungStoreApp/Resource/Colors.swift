@@ -8,6 +8,15 @@ enum AppColorType {
     static let division = UIColor(hex: "#D9D9D9") // 회색
 }
 
+enum DakrColorType {
+    static let primary = UIColor(hex: "#2189FF") // 파랑
+    static let secondary = UIColor(hex: "#FFFFFF") // 하양
+    static let background = UIColor(hex: "#000000") // 검정
+    static let highlight = UIColor(hex: "#2189FF") // 파랑
+    static let division = UIColor(hex: "#D9D9D9") // 회색
+}
+
+
 extension UIColor {
     // hex로 변환
     convenience init(hex: String) {
