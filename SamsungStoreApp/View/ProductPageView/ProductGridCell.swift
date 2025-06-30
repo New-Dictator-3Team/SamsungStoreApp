@@ -20,8 +20,8 @@ final class ProductGridCell: UIView {
   var product: ProductItem? {
     didSet {
       imageView.image = UIImage(named: product?.image ?? "placeholder")
-      nameLabel.text = product?.name ?? "-"
-      priceLabel.text = "\(product?.price ?? "0")원"
+      nameLabel.text = product?.localizedName ?? "-"
+      priceLabel.text = "\(product?.price ?? "0") "+"price".localized
     }
   }
   
