@@ -1,0 +1,80 @@
+/* 
+  Localizable.strings
+  SamsungStoreApp
+
+  Created by estelle on 6/30/25.
+  
+*/
+
+// 카테고리 (Categories)
+"category.mobile" = "모바일";
+"category.tv" = "TV/영상∙음향";
+"category.kitchen" = "주방가전";
+"category.living" = "리빙가전";
+"category.pc" = "PC/주변기기";
+
+// 모바일 항목 (Mobile Items)
+"item.galaxy_s25_edge" = "갤럭시 S25 엣지 자급제";
+"item.galaxy_s25_ultra" = "갤럭시 S25 울트라 자급제";
+"item.galaxy_z_flip6" = "갤럭시 Z 플립6 자급제";
+"item.galaxy_z_fold6" = "갤럭시 Z 폴드6 자급제";
+"item.galaxy_tab_s10" = "갤럭시 탭 S10 FE+ (Wi-Fi)";
+"item.galaxy_book5_pro_360" = "갤럭시 북5 프로 360";
+"item.monitor_m8" = "4K 스마트모니터 M8";
+"item.laser_printer_20ppm" = "흑백 레이저 프린터 20 ppm";
+"item.ultra5_allinone" = "올인원 Ultra 5";
+"item.desktop_i5" = "데스크탑 Tower Core™ i5";
+
+// TV/음향 항목
+"item.neo_qled_qndx1" = "2024 Neo QLED QNDX1";
+"item.oled_sf85" = "2025 OLED SF85";
+"item.movingstyle_oled" = "2025 무빙스타일 OLED";
+"item.music_frame_ls60d" = "뮤직 프레임 LS60D";
+"item.harmankardon_aura" = "하만카돈 AURA STUDIO 4";
+"item.akg_n5" = "AKG N5 하이브리드 노이즈 캔슬링 무선 이어폰";
+
+// 주방가전 항목
+"item.bespoke_ai_fridge" = "Bespoke AI 하이브리드 4도어";
+"item.wine_fridge" = "Infinite Line 와인냉장고";
+"item.kimchi_plus_fridge" = "AI 김치플러스 4도어";
+"item.ai_dishwasher" = "Bespoke AI 식기세척기";
+"item.infinite_ai_induction" = "Infinite AI 인덕션";
+"item.theplate_2zone" = "더 플레이트 인덕션 2구";
+"item.bespoke_oven" = "Bespoke 큐커 오븐 32L";
+"item.bespoke_microwave" = "Bespoke 전자레인지 23L";
+"item.bespoke_water" = "Bespoke 정수기 일체형";
+
+// 리빙가전 항목
+"item.ai_combo_washer" = "Bespoke AI 콤보 25/16kg";
+"item.ai_airdresser" = "Bespoke AI 에어드레서";
+"item.window_fit_ac" = "Bespoke 무풍에어컨 윈도우핏";
+"item.bluesky3100" = "블루스카이 3100";
+"item.inverter_dehumidifier" = "인버터 제습기";
+"item.bespoke_steam" = "Bespoke AI 스팀";
+"item.ai_bubble_washer" = "AI 통버블 세탁기 19kg";
+"item.infinite_ai_airpurifier" = "Infinite AI 공기청정기";
+
+// PC/주변기기
+"item.galaxy_book5_pro_360" = "갤럭시 북5 프로 360";
+"item.galaxy_book5_pro" = "갤럭시 북5 프로";
+"item.galaxy_book4_ultra" = "갤럭시 북4 울트라";
+"item.galaxy_book4_edge" = "갤럭시 북4 엣지";
+"item.galaxy_book4" = "갤럭시 북4";
+"item.ultra5_allinone" = "올인원 Ultra 5";
+"item.desktop_i5" = "데스크탑 Tower Core™ i5";
+
+// 하단 버튼 및 알럿창
+"price" = "원";
+"total" = "총";
+"count" = "개";
+"cancel_all" = "전체 취소";
+"cancel_order" = "주문 취소";
+"cancel_message" = "주문 내역을 모두 삭제하시겠습니까?";
+"yes" = "네";
+"no" = "아니오";
+"payment" = "결제하기";
+"order" = "주문 결제";
+"order_message" = "해당 상품을 결제하시겠습니까?";
+"completed" = "결제 완료";
+"completed_message" = "주문하신 내역이 결제 완료되었습니다.";
+"ok" = "확인";

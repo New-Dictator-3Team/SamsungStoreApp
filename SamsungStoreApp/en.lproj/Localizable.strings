@@ -1,0 +1,80 @@
+/* 
+  Localizable.strings
+  SamsungStoreApp
+
+  Created by estelle on 6/30/25.
+  
+*/
+
+// 카테고리 (Categories)
+"category.mobile" = "Mobile";
+"category.tv" = "TV/Video∙Audio";
+"category.kitchen" = "Kitchen Appliances";
+"category.living" = "Living Appliances";
+"category.pc" = "PC/Peripherals";
+
+// 모바일 항목 (Mobile Items)
+"item.galaxy_s25_edge" = "Galaxy S25 Edge (Unlocked)";
+"item.galaxy_s25_ultra" = "Galaxy S25 Ultra (Unlocked)";
+"item.galaxy_z_flip6" = "Galaxy Z Flip6 (Unlocked)";
+"item.galaxy_z_fold6" = "Galaxy Z Fold6 (Unlocked)";
+"item.galaxy_tab_s10" = "Galaxy Tab S10 FE+ (Wi-Fi)";
+"item.galaxy_book5_pro_360" = "Galaxy Book5 Pro 360";
+"item.monitor_m8" = "4K Smart Monitor M8";
+"item.laser_printer_20ppm" = "Monochrome Laser Printer 20 ppm";
+"item.ultra5_allinone" = "Ultra 5 All-in-One";
+"item.desktop_i5" = "Desktop Tower Core™ i5";
+
+// TV/음향 항목
+"item.neo_qled_qndx1" = "2024 Neo QLED QNDX1";
+"item.oled_sf85" = "2025 OLED SF85";
+"item.movingstyle_oled" = "2025 Moving Style OLED";
+"item.music_frame_ls60d" = "Music Frame LS60D";
+"item.harmankardon_aura" = "Harman Kardon AURA STUDIO 4";
+"item.akg_n5" = "AKG N5 Hybrid ANC Wireless Earbuds";
+
+// 주방가전 항목
+"item.bespoke_ai_fridge" = "Bespoke AI Hybrid 4-Door";
+"item.wine_fridge" = "Infinite Line Wine Fridge";
+"item.kimchi_plus_fridge" = "AI KimchiPlus 4-Door";
+"item.ai_dishwasher" = "Bespoke AI Dishwasher";
+"item.infinite_ai_induction" = "Infinite AI Induction";
+"item.theplate_2zone" = "The Plate Induction (2 Zone)";
+"item.bespoke_oven" = "Bespoke Cooker Oven 32L";
+"item.bespoke_microwave" = "Bespoke Microwave 23L";
+"item.bespoke_water" = "Bespoke Water Purifier Combo";
+
+// 리빙가전 항목
+"item.ai_combo_washer" = "Bespoke AI Washer-Dryer Combo 25/16kg";
+"item.ai_airdresser" = "Bespoke AI AirDresser";
+"item.window_fit_ac" = "Bespoke Wind-Free Air Conditioner (Window Fit)";
+"item.bluesky3100" = "BlueSky 3100";
+"item.inverter_dehumidifier" = "Inverter Dehumidifier";
+"item.bespoke_steam" = "Bespoke AI Steam Washer";
+"item.ai_bubble_washer" = "AI Bubble Washer 19kg";
+"item.infinite_ai_airpurifier" = "Infinite AI Air Purifier";
+
+// PC/주변기기
+"item.galaxy_book5_pro_360" = "Galaxy Book5 Pro 360";
+"item.galaxy_book5_pro" = "Galaxy Book5 Pro";
+"item.galaxy_book4_ultra" = "Galaxy Book4 Ultra";
+"item.galaxy_book4_edge" = "Galaxy Book4 Edge";
+"item.galaxy_book4" = "Galaxy Book4";
+"item.ultra5_allinone" = "AllinOne Ultra 5";
+"item.desktop_i5" = "Desktop Tower Core™ i5";
+
+// 하단 버튼 및 알럿창
+"price" = "won";
+"total" = "Total";
+"count" = "";
+"cancel_all" = "Cancel all";
+"cancel_order" = "Cancel order";
+"cancel_message" = "Are you sure you want to delete all items?";
+"yes" = "Yes";
+"no" = "No";
+"payment" = "Make payment";
+"order" = "Order payment";
+"order_message" = "Are you sure you want to pay for this product?";
+"completed" = "Payment completed";
+"completed_message" = "Your order has been paid for.";
+"ok" = "Ok";
