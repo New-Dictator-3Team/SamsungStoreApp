@@ -12,7 +12,7 @@ import UIKit
 extension ViewController: CategoryTabViewDelegate, ProductPageViewDelegate {
   func didTapCategoryButton(selectedCategoryIndex: Int) {
     let selectedItems = categories[selectedCategoryIndex].items
-    productPageView.configure(with: selectedItems)
+    scrollProductCartView.productPageView.configure(with: selectedItems)
   }
   
   func productPageView(_ view: ProductPageView, didSelect product: ProductItem) {

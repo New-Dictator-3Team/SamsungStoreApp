@@ -61,7 +61,7 @@ class CategoryTabView: UIView {
     
     categoryStackView.snp.makeConstraints {
       $0.top.bottom.equalTo(categoryScrollView.frameLayoutGuide).inset(16)
-      $0.leading.trailing.equalTo(categoryScrollView.contentLayoutGuide).inset(24)
+      $0.leading.trailing.equalTo(categoryScrollView.contentLayoutGuide).inset(16)
     }
   }
   
