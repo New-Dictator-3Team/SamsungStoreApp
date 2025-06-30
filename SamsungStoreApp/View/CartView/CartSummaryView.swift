@@ -19,6 +19,7 @@ final class CartSummaryView: UIView {
     super.init(frame: frame)
     setupUI()
     setupLayout()
+    configure(itemCount: 0, totalPrice: 0) // 초기 값
   }
 
   @available(*, unavailable)
