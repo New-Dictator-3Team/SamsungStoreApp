@@ -17,7 +17,7 @@ final class ViewController: UIViewController {
   private let dataService = DataService()
   
   private let mainView = UIView()
-  private let categoryTabView = CategoryTabView()
+  let categoryTabView = CategoryTabView()
   let productPageView = ProductPageView()
   private let cartView = CartView()
   private let summaryView = CartSummaryView()
@@ -45,6 +45,7 @@ final class ViewController: UIViewController {
     categoryTabView.delegate = self
     productPageView.delegate = self
     cartView.delegate = self
+    bottomView.delegate = self
   }
     
   private func setupLayout() {
@@ -112,5 +113,6 @@ final class ViewController: UIViewController {
     let totalPrice = cartItems.reduce(0) { $0 + ($1.price * $1.count) }
     cartView.reload(with: cartItems, totalCount: totalCount, totalPrice: totalPrice)
     summaryView.configure(itemCount: totalCount, totalPrice: totalPrice)
+    bottomView.updateButtonsEnabled(totalCount != 0)
   }
 }
