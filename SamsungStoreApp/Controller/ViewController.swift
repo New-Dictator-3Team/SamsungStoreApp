@@ -13,7 +13,7 @@ final class ViewController: UIViewController {
 
   var categories: [Category] = []
   var cartItems: [CartItem] = []
-  private var selectedCategory = "모바일"
+  private var selectedCategory = "category.mobile".localized
   private let dataService = DataService()
   
   private let mainView = UIView()
@@ -84,10 +84,10 @@ final class ViewController: UIViewController {
       case let .success(loadedCategories):
         self.categories = loadedCategories
         DispatchQueue.main.async {
-          self.categoryTabView.configure(categories: loadedCategories.map { $0.category })
+          self.categoryTabView.configure(categories: loadedCategories.map { $0.localizedCategory })
           if let defaultItems = loadedCategories.first(
             where: {
-              $0.category == self.selectedCategory
+              $0.localizedCategory == self.selectedCategory
             })?.items
           {
             print("✅ 불러온 카테고리 수: \(loadedCategories.count)")
@@ -109,4 +109,10 @@ final class ViewController: UIViewController {
     summaryView.configure(itemCount: totalCount, totalPrice: totalPrice)
     bottomView.updateButtonsEnabled(totalCount != 0)
   }
+}
+
+extension String {
+    var localized: String {
+        return NSLocalizedString(self, comment: "")
+    }
 }

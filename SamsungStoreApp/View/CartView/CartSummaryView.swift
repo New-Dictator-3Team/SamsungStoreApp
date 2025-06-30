@@ -62,7 +62,7 @@ final class CartSummaryView: UIView {
   }
 
   private func setupWonLabel() {
-    wonLabel.text = "원"
+    wonLabel.text = "price".localized
     wonLabel.configureLabel(font: Font.title(size: 16), color: AppColorType.secondary, alignment: .right)
   }
 
@@ -101,7 +101,7 @@ final class CartSummaryView: UIView {
   // MARK: - Configuration
 
   func configure(itemCount: Int, totalPrice: Int) {
-    itemCountLabel.text = "총 \(itemCount)개"
+    itemCountLabel.text = "total".localized+" \(itemCount)"+"count".localized
     totalPriceLabel.text = PriceFormatter.format(totalPrice)
   }
 }

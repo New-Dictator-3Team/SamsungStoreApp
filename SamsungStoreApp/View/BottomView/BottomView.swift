@@ -18,8 +18,8 @@ class BottomView: UIView {
   weak var delegate: BottomViewDelegate?
   
   // 버튼 생성
-  private let clearButton: BottomButton = .init(title: "전체 취소", type: .clear, fontSize: 18)
-  private let payButton: BottomButton = .init(title: "결제하기", type: .pay, fontSize: 18)
+  private let clearButton: BottomButton = .init(title: "cancel_all".localized, type: .clear, fontSize: 18)
+  private let payButton: BottomButton = .init(title: "payment".localized, type: .pay, fontSize: 18)
   
   /// 버튼들을 수평 정렬할 스택뷰
   private lazy var bottomButtonStack: UIStackView = {
