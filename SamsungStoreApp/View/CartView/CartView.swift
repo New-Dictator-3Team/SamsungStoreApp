@@ -9,17 +9,9 @@
 import SnapKit
 import UIKit
 
-protocol CartViewDelegate: AnyObject {
-  func cartView(_ cartView: CartView, didTapDeleteAt index: Int)
-  func cartView(_ cartView: CartView, didChangeCountAt index: Int, to newCount: Int)
-}
-
 final class CartView: UIView {
-  weak var delegate: CartViewDelegate?
-  private var displayedItems: [CartItem] = []
-
   private let tableContainerView = UIView()
-  private let tableView = UITableView()
+  let tableView = UITableView()
 
   // MARK: viewDidLoad
 
@@ -85,53 +77,11 @@ final class CartView: UIView {
 
   // MARK: - configureTableView
 
-  // dataSource + delegate 설정 및 셀
   private func configureTableView() {
-    tableView.dataSource = self // 몇 개의 셀을 만들지, 어떻게 생겼는지
-    tableView.delegate = self // UI 이벤트 처리
     tableView.register(CartItemCell.self, forCellReuseIdentifier: "CartItemCell") // TableView가 사용할 셀 클래스를 미리 등록(CartItemCell)
   }
 
-  func reload(with items: [CartItem], totalCount: Int, totalPrice: Int) {
-    self.displayedItems = items
+  func reload() {
     tableView.reloadData()
-  }
-}
-
-// MARK: - UITableViewDataSource
-
-extension CartView: UITableViewDataSource {
-  // 장바구니의 개수
-  func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-    return displayedItems.count
-  }
-
-  // cell 구성하고 데이터를 cell에 전달
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    // 등록해뒀던 "CartItemCell" 이름의 셀을 달라고 요청. (셀이 있으면 재사용, 없으면 만듦)
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: "CartItemCell", for: indexPath) as? CartItemCell else {
-      return UITableViewCell()
-    }
-    cell.delegate = self // 위임받음
-    let item = displayedItems[indexPath.row]
-    cell.configure(item: item)
-    return cell
-  }
-}
-
-// MARK: - UITableViewDelegate, CartItemCellDelegate
-
-// Delegate(셀 내부 발생 이벤트)
-extension CartView: UITableViewDelegate, CartItemCellDelegate {
-  // 셀에서 삭제 버튼이 눌렸을 때, 델리게이트에 알림
-  func didTapDeleteButton(_ cell: CartItemCell) {
-    guard let indexPath = tableView.indexPath(for: cell) else { return }
-    delegate?.cartView(self, didTapDeleteAt: indexPath.row)
-  }
-
-  // 셀에서 수량이 변경될 때, 델리게이트에 알림
-  func cartItemCell(_ cell: CartItemCell, didChangeCount newCount: Int) {
-    guard let indexPath = tableView.indexPath(for: cell) else { return }
-    delegate?.cartView(self, didChangeCountAt: indexPath.row, to: newCount)
   }
 }

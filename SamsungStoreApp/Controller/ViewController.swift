@@ -19,7 +19,7 @@ final class ViewController: UIViewController {
   private let mainView = UIView()
   private let categoryTabView = CategoryTabView()
   let productPageView = ProductPageView()
-  private let cartView = CartView()
+  let cartView = CartView()
   private let summaryView = CartSummaryView()
   private let bottomView = BottomView()
   
@@ -44,7 +44,8 @@ final class ViewController: UIViewController {
       
     categoryTabView.delegate = self
     productPageView.delegate = self
-    cartView.delegate = self
+    cartView.tableView.dataSource = self // 몇 개의 셀을 만들지, 어떻게 생겼는지
+    cartView.tableView.delegate = self // UI 이벤트 처리
   }
     
   private func setupLayout() {
@@ -110,7 +111,8 @@ final class ViewController: UIViewController {
   func updateCartView() {
     let totalCount = cartItems.reduce(0) { $0 + $1.count }
     let totalPrice = cartItems.reduce(0) { $0 + ($1.price * $1.count) }
-    cartView.reload(with: cartItems, totalCount: totalCount, totalPrice: totalPrice)
+    
+    cartView.reload()
     summaryView.configure(itemCount: totalCount, totalPrice: totalPrice)
   }
 }
