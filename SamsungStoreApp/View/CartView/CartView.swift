@@ -62,9 +62,9 @@ final class CartView: UIView {
   // tableContainerView 제약조건
   private func setupTableContainerViewLayout() {
     tableContainerView.snp.makeConstraints {
-      $0.top.equalTo(safeAreaLayoutGuide)
+      $0.top.bottom.equalTo(safeAreaLayoutGuide)
       $0.leading.trailing.equalToSuperview().inset(12)
-      $0.height.equalTo(176)
+//      $0.height.equalTo(150)
     }
   }
 
