@@ -49,6 +49,7 @@ final class CartItemCell: UITableViewCell {
   // MARK: - setupUI
 
   private func setupUI() {
+    backgroundColor = AppColorType.background
     addSubviews()
     setupUIComponents()
   }
