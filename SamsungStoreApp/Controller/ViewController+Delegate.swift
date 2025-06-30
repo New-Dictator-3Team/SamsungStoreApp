@@ -19,7 +19,7 @@ extension ViewController: CategoryTabViewDelegate {
 // MARK: - ProductPageViewDelegate
 
 extension ViewController: ProductPageViewDelegate {
-  func productPageView(_ view: ProductPageView, didSelect product: ProductItem) {
+  func productPageView(_: ProductPageView, didSelect product: ProductItem) {
     if let index = cartItems.firstIndex(where: { $0.name == product.localizedName }) {
       guard cartItems[index].count < 25 else { return }
       cartItems[index].count += 1
@@ -40,7 +40,7 @@ extension ViewController: UITableViewDataSource {
   }
 
   // cell 구성하고 데이터를 cell에 전달
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     // 등록해뒀던 "CartItemCell" 이름의 셀을 달라고 요청. (셀이 있으면 재사용, 없으면 만듦)
     guard let cell = scrollProductCartView.cartView.tableView.dequeueReusableCell(withIdentifier: "CartItemCell", for: indexPath) as? CartItemCell else {
       return UITableViewCell()
@@ -82,33 +82,33 @@ extension ViewController: BottomViewDelegate {
       self.updateCartView()
     }
   }
-  
+
   // 주문 결제
   func didTapPayButton() {
     showAlert(title: "order".localized, message: "order_message".localized) {
       // 장바구니 초기화, 카테고리 첫번째로 이동
       self.cartItems.removeAll()
       self.updateCartView()
-      
+
       self.categoryTabView.updateButtonState(index: 0)
       let selectedItems = self.categories[0].items
       self.scrollProductCartView.productPageView.configure(with: selectedItems)
-      
+
       self.showSuccessAlert()
     }
   }
-  
+
   private func showAlert(title: String, message: String, onConfirm: @escaping () -> Void) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    
+
     alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "yes".localized, style: .destructive, handler: { _ in
       onConfirm()
     }))
-    
+
     present(alert, animated: true)
   }
-  
+
   // 결제 완료 안내
   private func showSuccessAlert() {
     let successAlert = UIAlertController(
@@ -116,9 +116,9 @@ extension ViewController: BottomViewDelegate {
       message: "completed_message".localized,
       preferredStyle: .alert
     )
-    
+
     successAlert.addAction(UIAlertAction(title: "ok".localized, style: .default))
-    
+
     present(successAlert, animated: true)
   }
 }

@@ -41,7 +41,7 @@ final class ViewController: UIViewController {
     for item in [categoryTabView, scrollProductCartView, summaryView, bottomView] {
       mainView.addSubview(item)
     }
-    categoryTabView.delegate = self    
+    categoryTabView.delegate = self
     scrollProductCartView.productPageView.delegate = self
     scrollProductCartView.cartView.tableView.delegate = self
     scrollProductCartView.cartView.tableView.dataSource = self
@@ -123,7 +123,7 @@ final class ViewController: UIViewController {
 }
 
 extension String {
-    var localized: String {
-        return NSLocalizedString(self, comment: "")
-    }
+  var localized: String {
+    return NSLocalizedString(self, comment: "")
+  }
 }

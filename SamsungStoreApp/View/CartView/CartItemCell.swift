@@ -207,7 +207,7 @@ final class CartItemCell: UITableViewCell {
     self.item = item
     itemLabel.text = item.name
     countLabel.text = "\(item.count)"
-    priceLabel.text = "\(PriceFormatter.format(item.price * item.count)) "+"price".localized
+    priceLabel.text = "\(PriceFormatter.format(item.price * item.count)) " + "price".localized
 
     updateMinusButton(item.count)
     plusButton.setTitleColor(item.count >= 25 ? AppColorType.division : .systemBlue, for: .normal)

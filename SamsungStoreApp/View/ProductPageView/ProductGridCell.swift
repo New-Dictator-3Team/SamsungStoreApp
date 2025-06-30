@@ -21,7 +21,7 @@ final class ProductGridCell: UIView {
     didSet {
       imageView.image = UIImage(named: product?.image ?? "placeholder")
       nameLabel.text = product?.localizedName ?? "-"
-      priceLabel.text = "\(product?.price ?? "0") "+"price".localized
+      priceLabel.text = "\(product?.price ?? "0") " + "price".localized
     }
   }
   

@@ -45,9 +45,7 @@ final class CartView: UIView {
   // MARK: setupUIComponents
   
   private func setupUIComponents() {
-    backgroundColor = AppColorType.background
-    
-    emptyLabel.text = "장바구니 안에 담긴 상품이 없습니다."
+    emptyLabel.text = "empty_shopping_cart".localized
     emptyLabel.textAlignment = .center
     emptyLabel.textColor = .secondaryLabel
     emptyLabel.font = Font.title(size: 16)

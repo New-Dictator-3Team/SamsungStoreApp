@@ -78,3 +78,4 @@
 "completed" = "Payment completed";
 "completed_message" = "Your order has been paid for.";
 "ok" = "Ok";
+"empty_shopping_cart" = "Empty shopping cart";
