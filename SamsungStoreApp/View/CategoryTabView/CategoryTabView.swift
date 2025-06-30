@@ -106,8 +106,8 @@ class CategoryTabView: UIView {
       let isSelected = button.isSelected
       
       var updatedConfig = button.configuration
-      updatedConfig?.baseBackgroundColor = isSelected ? AppColorType.primary : .white
-      updatedConfig?.baseForegroundColor = isSelected ? .white : .black
+        updatedConfig?.baseBackgroundColor = isSelected ? AppColorType.primary : AppColorType.background
+        updatedConfig?.baseForegroundColor = isSelected ? AppColorType.background: AppColorType.secondary
       button.configuration = updatedConfig
       
       // 크기 변화 애니메이션

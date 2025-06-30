@@ -18,7 +18,7 @@ enum ActionType {
     case .clear:
       return AppColorType.secondary
     case .pay:
-      return AppColorType.background
+      return AppColorType.highlight
     }
   }
 }
@@ -39,7 +39,7 @@ final class BottomButton: UIButton {
     setTitleColor(type.textColor, for: .normal)
     titleLabel?.font = Font.text(size: fontSize)
     backgroundColor = type.backgroundColor
-//    layer.cornerRadius = 20
+    layer.cornerRadius = 15
     layer.borderWidth = 2
     layer.borderColor = AppColorType.secondary.cgColor
   }

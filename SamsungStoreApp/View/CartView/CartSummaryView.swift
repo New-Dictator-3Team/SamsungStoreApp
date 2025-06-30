@@ -30,7 +30,7 @@ final class CartSummaryView: UIView {
   // MARK: setupUI
 
   private func setupUI() {
-    backgroundColor = .white
+      backgroundColor = AppColorType.background
     addSubviews()
     setupUIComponents()
     setupLayout()
