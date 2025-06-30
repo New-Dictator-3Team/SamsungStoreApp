@@ -3,7 +3,7 @@ import UIKit
 enum AppColorType {
   static let primary = UIColor(light: "#2189FF", dark: "#2189FF") // 파랑
   static let secondary = UIColor(light: "#000000", dark: "#FFFFFF") // 검정 <-> 하양
-  static let background = UIColor(light: "#FFFFFF", dark: "#000000") // 하양 <-> 검정
+  static let background = UIColor(light: "#FFFFFF", dark: "#1A1A1A") // 하양 <-> 검정
   static let highlight = UIColor(light: "#2189FF", dark: "#2189FF") // 파랑
   static let division = UIColor(light: "#D9D9D9", dark: "#D9D9D9") // 회색
 }
