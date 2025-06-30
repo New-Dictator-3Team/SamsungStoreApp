@@ -11,14 +11,14 @@ import UIKit
 final class ViewController: UIViewController {
 // MARK: - 프로퍼티
 
-  private var categories: [Category] = []
+  var categories: [Category] = []
+  var cartItems: [CartItem] = []
   private var selectedCategory = "모바일"
   private let dataService = DataService()
-  private var cartItems: [CartItem] = []
   
   private let mainView = UIView()
   private let categoryTabView = CategoryTabView()
-  private let productPageView = ProductPageView()
+  let productPageView = ProductPageView()
   private let cartView = CartView()
   private let summaryView = CartSummaryView()
   private let bottomView = BottomView()
@@ -108,7 +108,7 @@ final class ViewController: UIViewController {
   //    dataService.jsonDebug()
     }
   
-  private func updateCartView() {
+  func updateCartView() {
     let totalCount = cartItems.reduce(0) { $0 + $1.count }
     let totalPrice = cartItems.reduce(0) { $0 + ($1.price * $1.count) }
     cartView.reload(with: cartItems, totalCount: totalCount, totalPrice: totalPrice)
@@ -116,35 +116,3 @@ final class ViewController: UIViewController {
   }
 }
 
-// MARK: - 델리게이트
-
-extension ViewController: CategoryTabViewDelegate, ProductPageViewDelegate {
-  func didTapCategoryButton(selectedCategoryIndex: Int) {
-    let selectedItems = categories[selectedCategoryIndex].items
-    productPageView.configure(with: selectedItems)
-  }
-
-  func productPageView(_ view: ProductPageView, didSelect product: ProductItem) {
-    if let index = cartItems.firstIndex(where: { $0.name == product.name }) {
-      guard cartItems[index].count < 25 else { return }
-      cartItems[index].count += 1
-      updateCartView()
-    } else {
-      let item = CartItem(name: product.name, price: PriceFormatter.format(product.price), count: 1)
-      cartItems.insert(item, at: 0)
-      updateCartView()
-    }
-  }
-}
-
-extension ViewController: CartViewDelegate {
-  func cartView(_ cartView: CartView, didTapDeleteAt index: Int) {
-    cartItems.remove(at: index)
-    updateCartView()
-  }
-
-  func cartView(_ cartView: CartView, didChangeCountAt index: Int, to newCount: Int) {
-    cartItems[index].count = newCount
-    updateCartView()
-  }
-}
