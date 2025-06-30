@@ -40,10 +40,10 @@ final class ViewController: UIViewController {
     for item in [categoryTabView, scrollProductCartView, summaryView, bottomView] {
       mainView.addSubview(item)
     }
-    
     categoryTabView.delegate = self    
     scrollProductCartView.productPageView.delegate = self
-    scrollProductCartView.cartView.delegate = self
+    scrollProductCartView.cartView.tableView.delegate = self
+    scrollProductCartView.cartView.tableView.dataSource = self
     bottomView.delegate = self
   }
     
@@ -104,7 +104,8 @@ final class ViewController: UIViewController {
   func updateCartView() {
     let totalCount = cartItems.reduce(0) { $0 + $1.count }
     let totalPrice = cartItems.reduce(0) { $0 + ($1.price * $1.count) }
-    scrollProductCartView.cartView.reload(with: cartItems, totalCount: totalCount, totalPrice: totalPrice)
+
+    scrollProductCartView.cartView.reload()
     summaryView.configure(itemCount: totalCount, totalPrice: totalPrice)
     bottomView.updateButtonsEnabled(totalCount != 0)
   }
