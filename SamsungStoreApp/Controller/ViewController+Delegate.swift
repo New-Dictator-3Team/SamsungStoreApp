@@ -14,7 +14,7 @@ extension ViewController: CategoryTabViewDelegate, ProductPageViewDelegate {
     let selectedItems = categories[selectedCategoryIndex].items
     productPageView.configure(with: selectedItems)
   }
-
+  
   func productPageView(_ view: ProductPageView, didSelect product: ProductItem) {
     if let index = cartItems.firstIndex(where: { $0.name == product.name }) {
       guard cartItems[index].count < 25 else { return }
@@ -33,7 +33,7 @@ extension ViewController: CartViewDelegate {
     cartItems.remove(at: index)
     updateCartView()
   }
-
+  
   func cartView(_ cartView: CartView, didChangeCountAt index: Int, to newCount: Int) {
     cartItems[index].count = newCount
     updateCartView()
