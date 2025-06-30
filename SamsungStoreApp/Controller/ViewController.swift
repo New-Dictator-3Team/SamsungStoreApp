@@ -18,8 +18,10 @@ final class ViewController: UIViewController {
   
   private let mainView = UIView()
   private let categoryTabView = CategoryTabView()
+  
   let productPageView = ProductPageView()
   private let cartView = CartView()
+  
   private let summaryView = CartSummaryView()
   private let bottomView = BottomView()
   
@@ -54,19 +56,21 @@ final class ViewController: UIViewController {
       
     categoryTabView.snp.makeConstraints {
       $0.top.leading.trailing.equalToSuperview()
-      // $0.height.equalTo(76) // 얘가 범근님 뷰컨엔 없음
+      $0.height.equalTo(65)
     }
       
     productPageView.snp.makeConstraints {
       $0.top.equalTo(categoryTabView.snp.bottom)
       $0.leading.trailing.equalToSuperview()
-      $0.bottom.equalTo(cartView.snp.top)
+      //$0.bottom.equalTo(cartView.snp.top)
+      $0.height.equalTo(436)
     }
       
     cartView.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview()
       $0.bottom.equalTo(summaryView.snp.top)
-      $0.height.equalTo(200)
+      $0.top.equalTo(productPageView.snp.bottom)
+      //$0.height.equalTo(200)
     }
       
     summaryView.snp.makeConstraints {
