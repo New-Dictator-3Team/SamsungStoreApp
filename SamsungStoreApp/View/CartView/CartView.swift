@@ -56,6 +56,8 @@ final class CartView: UIView {
     tableContainerView.layer.borderColor = UIColor.lightGray.cgColor
     tableContainerView.layer.borderWidth = 0.5
     tableContainerView.clipsToBounds = true
+    
+    tableView.backgroundColor = AppColorType.background
   }
 
   // MARK: setupLayout
