@@ -79,7 +79,6 @@ class CategoryTabView: UIView {
     }
   }
   
-  
   // MARK: - 버튼 클릭 처리
   
   @objc private func categoryButtonTapped(_ sender: UIButton) {

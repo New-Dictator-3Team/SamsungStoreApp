@@ -78,3 +78,4 @@
 "completed" = "결제 완료";
 "completed_message" = "주문하신 내역이 결제 완료되었습니다.";
 "ok" = "확인";
+"empty_shopping_cart" = "장바구니 안에 담긴 상품이 없습니다.";

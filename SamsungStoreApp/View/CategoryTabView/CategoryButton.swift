@@ -44,7 +44,6 @@ enum CategoryActionType {
 }
 
 final class CategoryButton: UIButton {
-  
   private var fontSize: CGFloat = 18
   private var title: String = ""
   

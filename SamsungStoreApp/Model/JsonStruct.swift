@@ -6,7 +6,7 @@ struct ProductItem: Decodable {
   let image: String
   let nameKey: String
   let price: String
-  
+
   var localizedName: String {
     return nameKey.localized
   }
@@ -17,7 +17,7 @@ struct ProductItem: Decodable {
 struct Category: Decodable {
   let categoryKey: String
   let items: [ProductItem]
-  
+
   var localizedCategory: String {
     return categoryKey.localized
   }
