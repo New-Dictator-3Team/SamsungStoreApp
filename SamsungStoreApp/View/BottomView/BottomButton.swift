@@ -41,7 +41,7 @@ final class BottomButton: UIButton {
     backgroundColor = type.backgroundColor
     layer.cornerRadius = 15
     layer.borderWidth = 2
-    layer.borderColor = AppColorType.secondary.cgColor
+    layer.borderColor = UIColor.lightGray.cgColor
   }
   
   override func layoutSubviews() { // 높이값이 정해진 후에 이 함수가 호출됨
