@@ -16,7 +16,7 @@
 
 ### 📂 카테고리
 - 모바일, TV/영상/음향, 주방가전, 리빙가전, PC/주변기기 다섯 개 카테고리 구성
-- UICollectionView로 구현된 탭 메뉴 (CategoryTabView)
+- UIScrollView와 UIStackView로 구현된 탭 메뉴 (CategoryTabView)
 
 ### 🛒 상품 목록
 - 카테고리 선택 시 해당 상품들을 카드 UI(ProductGridCell)로 표시
