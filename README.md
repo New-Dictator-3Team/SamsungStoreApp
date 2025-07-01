@@ -14,17 +14,9 @@
   - iPhone 11
   - iPhone 16 Pro Max
 
-| iPhone SE (3rd Gen) | iPhone 13 mini |
-|---------------------|----------------|
-| ![Image](https://github.com/user-attachments/assets/7019756b-5155-42b2-bae1-c7d4c0fc310c) | ![Image](https://github.com/user-attachments/assets/dbf09f7c-6e30-4322-9a3c-f6d47d5306fe) |
-
-| iPhone 11 | iPhone 16 Pro Max |
-|-----------|-------------------|
-| ![Image](https://github.com/user-attachments/assets/8c7dd720-1ef5-4c40-9480-ecf99c11d72a) | ![Image](https://github.com/user-attachments/assets/6eb8e31b-5f9b-4ea0-9d0f-755ea7486257) |
-
-| 다국어 지원 |
-|------------------|
-| ![Image](https://github.com/user-attachments/assets/54bf168c-71c6-4493-9645-afa5dd6adfc4) |
+| iPhone SE (3rd Gen) | iPhone 13 mini | iPhone 11 | iPhone 16 Pro Max | 다국어 지원 |
+|---------------------|----------------|-----------|-------------------|--------------|
+| ![SE](https://github.com/user-attachments/assets/7019756b-5155-42b2-bae1-c7d4c0fc310c) | ![13mini](https://github.com/user-attachments/assets/dbf09f7c-6e30-4322-9a3c-f6d47d5306fe) | ![11](https://github.com/user-attachments/assets/8c7dd720-1ef5-4c40-9480-ecf99c11d72a) | ![16PM](https://github.com/user-attachments/assets/6eb8e31b-5f9b-4ea0-9d0f-755ea7486257) | ![Lang](https://github.com/user-attachments/assets/54bf168c-71c6-4493-9645-afa5dd6adfc4) |
 
 ## 🧭 기능 요약
 
