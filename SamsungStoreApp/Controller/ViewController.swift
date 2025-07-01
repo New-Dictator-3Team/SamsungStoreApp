@@ -13,7 +13,7 @@ final class ViewController: UIViewController {
 
   var categories: [Category] = []
   var cartItems: [CartItem] = []
-  private var selectedCategory = "모바일"
+  private var selectedCategory = "category.mobile".localized
   private let dataService = DataService()
   
   private let mainView = UIView()
@@ -29,6 +29,7 @@ final class ViewController: UIViewController {
     setupUI()
     setupLayout()
     loadCategoryData()
+    updateCartView() // 장바구니 초기 안내문구
   }
     
   // MARK: - UI 세팅
@@ -40,7 +41,7 @@ final class ViewController: UIViewController {
     for item in [categoryTabView, scrollProductCartView, summaryView, bottomView] {
       mainView.addSubview(item)
     }
-    categoryTabView.delegate = self    
+    categoryTabView.delegate = self
     scrollProductCartView.productPageView.delegate = self
     scrollProductCartView.cartView.tableView.delegate = self
     scrollProductCartView.cartView.tableView.dataSource = self
@@ -84,10 +85,10 @@ final class ViewController: UIViewController {
       case let .success(loadedCategories):
         self.categories = loadedCategories
         DispatchQueue.main.async {
-          self.categoryTabView.configure(categories: loadedCategories.map { $0.category })
+          self.categoryTabView.configure(categories: loadedCategories.map { $0.localizedCategory })
           if let defaultItems = loadedCategories.first(
             where: {
-              $0.category == self.selectedCategory
+              $0.localizedCategory == self.selectedCategory
             })?.items
           {
             print("✅ 불러온 카테고리 수: \(loadedCategories.count)")
@@ -104,9 +105,25 @@ final class ViewController: UIViewController {
   func updateCartView() {
     let totalCount = cartItems.reduce(0) { $0 + $1.count }
     let totalPrice = cartItems.reduce(0) { $0 + ($1.price * $1.count) }
+    
+    // 셀 하나당 세로 44
+    let rowHeight: CGFloat = 44
+    
+    // 셀 최소 4개의 공간 확보 (장바구니 비어있을 때 알림 공간), 4개 이상부터 셀이 늘어남. (max함수 사용)
+    let totalHeight = max(rowHeight * 4, rowHeight * CGFloat(cartItems.count))
+    scrollProductCartView.updateHeight(totalHeight)
 
+    // 장바구니 비어 있을 경우에 안내 문구 표시
+    scrollProductCartView.cartView.updateEmptyLabel(isEmpty: cartItems.isEmpty)
+    
     scrollProductCartView.cartView.reload()
     summaryView.configure(itemCount: totalCount, totalPrice: totalPrice)
     bottomView.updateButtonsEnabled(totalCount != 0)
+  }
+}
+
+extension String {
+  var localized: String {
+    return NSLocalizedString(self, comment: "")
   }
 }

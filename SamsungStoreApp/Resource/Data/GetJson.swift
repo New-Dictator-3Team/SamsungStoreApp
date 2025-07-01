@@ -33,9 +33,9 @@ class DataService {
       switch $0 {
       case let .success(categories):
         for category in categories {
-          print("- \(category.category)")
+          print("- \(category.categoryKey)")
           for item in category.items {
-            print("  - \(item.image) \(item.name): \(item.price)")
+            print("  - \(item.image) \(item.localizedName): \(item.price)")
           }
           print("")
         }
@@ -45,7 +45,6 @@ class DataService {
     }
   }
 }
-
 
 // Usage
 // override func viewDidLoad() {

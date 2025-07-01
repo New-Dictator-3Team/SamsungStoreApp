@@ -34,7 +34,7 @@ class CategoryTabView: UIView {
   }()
   
   // MARK: - Initializer
-
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupUI()
@@ -46,7 +46,7 @@ class CategoryTabView: UIView {
   }
   
   // MARK: - UI 세팅
-
+  
   private func setupUI() {
     addSubview(categoryScrollView)
     categoryScrollView.addSubview(categoryStackView)
@@ -66,11 +66,11 @@ class CategoryTabView: UIView {
   }
   
   // MARK: - 카테고리 버튼 목록 구성
-
+  
   func configure(categories: [String]) {
     // 각 카테고리에 대해 버튼 생성 및 추가
     for (index, category) in categories.enumerated() {
-      let categoryButton = createCategoryButton(title: category)
+      let categoryButton = CategoryButton(title: category, fontSize: 18)
       categoryButton.isSelected = (index == 0)
       categoryButton.tag = index
       categoryButton.addTarget(self, action: #selector(categoryButtonTapped), for: .touchUpInside)
@@ -79,48 +79,8 @@ class CategoryTabView: UIView {
     }
   }
   
-  // 버튼 스타일 및 애니메이션 설정
-  private func createCategoryButton(title: String) -> UIButton {
-    var config = UIButton.Configuration.filled()
-    config.title = title
-    config.titleAlignment = .center
-    config.cornerStyle = .capsule
-    config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16)
-    config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { attributes in
-      var newAttributes = attributes
-      newAttributes.font = Font.text(size: 18)
-      return newAttributes
-    }
-    
-    let categoryButton = UIButton(configuration: config)
-    
-    // 그림자 설정
-    categoryButton.layer.shadowColor = UIColor.black.withAlphaComponent(0.25).cgColor
-    categoryButton.layer.shadowOpacity = 1
-    categoryButton.layer.shadowOffset = CGSize(width: 0, height: 4)
-    categoryButton.layer.shadowRadius = 4
-    categoryButton.layer.masksToBounds = false
-    
-    // 선택 상태에 따라 색상/변형 조정
-    categoryButton.configurationUpdateHandler = { button in
-      let isSelected = button.isSelected
-      
-      var updatedConfig = button.configuration
-        updatedConfig?.baseBackgroundColor = isSelected ? AppColorType.primary : AppColorType.background
-        updatedConfig?.baseForegroundColor = isSelected ? AppColorType.background: AppColorType.secondary
-      button.configuration = updatedConfig
-      
-      // 크기 변화 애니메이션
-      UIView.animate(withDuration: 0.3) {
-        button.transform = isSelected ? CGAffineTransform(scaleX: 1.06, y: 1.06) : .identity
-      }
-    }
-    
-    return categoryButton
-  }
-  
   // MARK: - 버튼 클릭 처리
-
+  
   @objc private func categoryButtonTapped(_ sender: UIButton) {
     let selectedCategoryIndex = sender.tag
     updateButtonState(index: selectedCategoryIndex)

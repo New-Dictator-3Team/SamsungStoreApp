@@ -30,7 +30,7 @@ final class CartSummaryView: UIView {
   // MARK: setupUI
 
   private func setupUI() {
-      backgroundColor = AppColorType.background
+    backgroundColor = AppColorType.background
     addSubviews()
     setupUIComponents()
     setupLayout()
@@ -53,17 +53,17 @@ final class CartSummaryView: UIView {
   }
 
   private func setupItemCountLabel() {
-    itemCountLabel.configureLabel(font: Font.text(size: 12), colorHex: "#4A4A4A", alignment: .right)
+    itemCountLabel.configureLabel(font: Font.text(size: 12), color: .systemGray, alignment: .right)
   }
 
   private func setupTotalPriceLabel() {
-    totalPriceLabel.configureLabel(font: Font.title(size: 24), colorHex: "#2189FF", alignment: .right)
+    totalPriceLabel.configureLabel(font: Font.title(size: 24), color: AppColorType.primary, alignment: .right)
     totalPriceLabel.adjustsFontSizeToFitWidth = true
   }
 
   private func setupWonLabel() {
-    wonLabel.text = "원"
-    wonLabel.configureLabel(font: Font.title(size: 16), colorHex: "#000000", alignment: .right)
+    wonLabel.text = "price".localized
+    wonLabel.configureLabel(font: Font.title(size: 16), color: AppColorType.secondary, alignment: .right)
   }
 
   // MARK: setupLayout
@@ -101,7 +101,7 @@ final class CartSummaryView: UIView {
   // MARK: - Configuration
 
   func configure(itemCount: Int, totalPrice: Int) {
-    itemCountLabel.text = "총 \(itemCount)개"
+    itemCountLabel.text = "total".localized+" \(itemCount)"+"count".localized
     totalPriceLabel.text = PriceFormatter.format(totalPrice)
   }
 }

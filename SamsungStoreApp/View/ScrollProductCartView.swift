@@ -11,7 +11,6 @@ import UIKit
 // MARK: - ScrollProductCartView
 
 final class ScrollProductCartView: UIScrollView {
-  
   // MARK: - UI 컴포넌트
   
   let stackView = UIStackView()
@@ -46,7 +45,7 @@ final class ScrollProductCartView: UIScrollView {
   private func setupLayout() {
     stackView.snp.makeConstraints {
       $0.edges.equalToSuperview()
-      $0.width.equalToSuperview() // 중요함
+      $0.width.equalToSuperview()
     }
     
     productPageView.snp.makeConstraints {
@@ -58,8 +57,16 @@ final class ScrollProductCartView: UIScrollView {
     cartView.snp.makeConstraints {
       $0.top.equalTo(productPageView.snp.bottom)
       $0.leading.trailing.equalToSuperview()
-      $0.bottom.equalToSuperview()
-      $0.height.equalTo(200) // 컨텐츠 길이에 따라 유동적으로 바뀌게 하시려면 지울 필요가 있습니다
+    }
+  }
+  
+  func updateHeight(_ height: CGFloat) {
+    cartView.updateHeight(height)
+    
+    cartView.snp.remakeConstraints {
+      $0.top.equalTo(productPageView.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(height)
     }
   }
 }

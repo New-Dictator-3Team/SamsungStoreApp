@@ -20,8 +20,8 @@ final class ProductGridCell: UIView {
   var product: ProductItem? {
     didSet {
       imageView.image = UIImage(named: product?.image ?? "placeholder")
-      nameLabel.text = product?.name ?? "-"
-      priceLabel.text = "\(product?.price ?? "0")원"
+      nameLabel.text = product?.localizedName ?? "-"
+      priceLabel.text = "\(product?.price ?? "0") " + "price".localized
     }
   }
   
@@ -40,7 +40,7 @@ final class ProductGridCell: UIView {
   // MARK: - UI 세팅
   
   private func setupUI() {
-      backgroundColor = AppColorType.background
+    backgroundColor = AppColorType.background
     layer.cornerRadius = 8
     layer.borderWidth = 0.5
     layer.borderColor = UIColor.lightGray.cgColor
