@@ -7,6 +7,25 @@
 
 <br>
 
+## 📱 아이폰 기기별 시연 영상
+- 다양한 화면 크기에서의 UI 반응형 확인 가능
+  - iPhone SE (2nd generation)
+  - iPhone 13 mini
+  - iPhone 11
+  - iPhone 16 Pro Max
+
+| iPhone SE (3rd Gen) | iPhone 13 mini |
+|---------------------|----------------|
+| ![Image](https://github.com/user-attachments/assets/7019756b-5155-42b2-bae1-c7d4c0fc310c) | ![Image](https://github.com/user-attachments/assets/dbf09f7c-6e30-4322-9a3c-f6d47d5306fe) |
+
+| iPhone 11 | iPhone 16 Pro Max |
+|-----------|-------------------|
+| ![Image](https://github.com/user-attachments/assets/8c7dd720-1ef5-4c40-9480-ecf99c11d72a) | ![Image](https://github.com/user-attachments/assets/6eb8e31b-5f9b-4ea0-9d0f-755ea7486257) |
+
+| 다국어 지원 |
+|------------------|
+| ![Image](https://github.com/user-attachments/assets/54bf168c-71c6-4493-9645-afa5dd6adfc4) |
+
 ## 🧭 기능 요약
 
 🏠 메인 화면
@@ -19,9 +38,11 @@
 - UIScrollView와 UIStackView로 구현된 탭 메뉴 (CategoryTabView)
 
 ### 🛒 상품 목록
-- 카테고리 선택 시 해당 상품들을 카드 UI(ProductGridCell)로 표시
+- UICollectionView로 구현된 상품 목록
+- GridCell이 2 x 2 형태로 보여짐
 - 좌우 페이지 넘김으로 전체 상품 탐색 가능 (페이징)
 - 하단에는 현재 페이지를 나타내는 페이지 인디케이터 표시
+- 페이지 인디케이터를 길게 눌러 손가락 좌우 이동하면 상품 목록도 그에 맞춰 페이지 전환됨
 
 ### 🪣 장바구니
 - UITableView 기반의 장바구니 구현
